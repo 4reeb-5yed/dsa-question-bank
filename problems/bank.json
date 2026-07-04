@@ -1,12 +1,1202 @@
 [
-  {"id": 1, "slug": "two-sum", "title": "Two Sum", "difficulty": "easy", "topic": "array-hashing", "statement": "Given an array of integers and a target value, return indices of the two numbers that add up to the target.", "solution_code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n", "test_code": "from solutions.day_001_two_sum import two_sum\n\ndef test_two_sum_basic():\n    assert two_sum([2, 7, 11, 15], 9) == [0, 1]\n\ndef test_two_sum_negative():\n    assert two_sum([-1, -2, -3, -4, -5], -8) == [2, 4]\n"},
-  {"id": 2, "slug": "contains-duplicate", "title": "Contains Duplicate", "difficulty": "easy", "topic": "array-hashing", "statement": "Determine if an array contains any duplicate values.", "solution_code": "def contains_duplicate(nums):\n    return len(nums) != len(set(nums))\n", "test_code": "from solutions.day_002_contains_duplicate import contains_duplicate\n\ndef test_has_duplicate():\n    assert contains_duplicate([1, 2, 3, 1]) == True\n\ndef test_no_duplicate():\n    assert contains_duplicate([1, 2, 3, 4]) == False\n"},
-  {"id": 3, "slug": "valid-anagram", "title": "Valid Anagram", "difficulty": "easy", "topic": "array-hashing", "statement": "Check if two strings are valid anagrams of each other.", "solution_code": "def is_anagram(s, t):\n    return sorted(s) == sorted(t)\n", "test_code": "from solutions.day_003_valid_anagram import is_anagram\n\ndef test_is_anagram():\n    assert is_anagram('anagram', 'nagaram') == True\n\ndef test_not_anagram():\n    assert is_anagram('rat', 'car') == False\n"},
-  {"id": 4, "slug": "best-time-to-buy-sell", "title": "Best Time to Buy and Sell Stock", "difficulty": "easy", "topic": "array-hashing", "statement": "Find the maximum profit from a single stock transaction.", "solution_code": "def max_profit(prices):\n    min_price = float('inf')\n    max_profit = 0\n    for price in prices:\n        min_price = min(min_price, price)\n        max_profit = max(max_profit, price - min_price)\n    return max_profit\n", "test_code": "from solutions.day_004_best_time_to_buy_sell import max_profit\n\ndef test_max_profit_basic():\n    assert max_profit([7, 1, 5, 3, 6, 4]) == 5\n\ndef test_decreasing_prices():\n    assert max_profit([7, 6, 4, 3, 1]) == 0\n"},
-  {"id": 5, "slug": "product-except-self", "title": "Product of Array Except Self", "difficulty": "medium", "topic": "array-hashing", "statement": "Return an array where each element is the product of all numbers except itself.", "solution_code": "def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    postfix = 1\n    for i in range(n - 1, -1, -1):\n        result[i] *= postfix\n        postfix *= nums[i]\n    return result\n", "test_code": "from solutions.day_005_product_except_self import product_except_self\n\ndef test_product_basic():\n    assert product_except_self([1, 2, 3, 4]) == [24, 12, 8, 6]\n\ndef test_product_with_zeros():\n    assert product_except_self([1, 0, 3, 4]) == [0, 12, 0, 0]\n"},
-  {"id": 6, "slug": "find-minimum-rotated", "title": "Find Minimum in Rotated Sorted Array", "difficulty": "medium", "topic": "binary-search", "statement": "Find the minimum element in a rotated sorted array.", "solution_code": "def find_min(nums):\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = (left + right) // 2\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        else:\n            right = mid\n    return nums[left]\n", "test_code": "from solutions.day_006_find_minimum_rotated import find_min\n\ndef test_find_min_basic():\n    assert find_min([3, 4, 5, 1, 2]) == 1\n\ndef test_find_min_not_rotated():\n    assert find_min([1, 2, 3, 4, 5]) == 1\n"},
-  {"id": 7, "slug": "search-rotated-array", "title": "Search in Rotated Sorted Array", "difficulty": "medium", "topic": "binary-search", "statement": "Search for a target value in a rotated sorted array.", "solution_code": "def search(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[left] <= nums[mid]:\n            if nums[left] <= target < nums[mid]:\n                right = mid - 1\n            else:\n                left = mid + 1\n        else:\n            if nums[mid] < target <= nums[right]:\n                left = mid + 1\n            else:\n                right = mid - 1\n    return -1\n", "test_code": "from solutions.day_007_search_rotated_array import search\n\ndef test_search_found():\n    assert search([4, 5, 6, 7, 0, 1, 2], 0) == 4\n\ndef test_search_not_found():\n    assert search([4, 5, 6, 7, 0, 1, 2], 3) == -1\n"},
-  {"id": 8, "slug": "3sum", "title": "3Sum", "difficulty": "medium", "topic": "two-pointers", "statement": "Find all unique triplets that sum to zero.", "solution_code": "def three_sum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            s = nums[i] + nums[left] + nums[right]\n            if s == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                left += 1\n                right -= 1\n            elif s < 0:\n                left += 1\n            else:\n                right -= 1\n    return result\n", "test_code": "from solutions.day_008_3sum import three_sum\n\ndef test_three_sum_basic():\n    result = three_sum([-1, 0, 1, 2, -1, -4])\n    assert len(result) == 2\n\ndef test_three_sum_no_solution():\n    assert three_sum([1, 2, 3]) == []\n"},
-  {"id": 9, "slug": "container-with-most-water", "title": "Container With Most Water", "difficulty": "medium", "topic": "two-pointers", "statement": "Find two lines that form a container holding the most water.", "solution_code": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_water = 0\n    while left < right:\n        h = min(height[left], height[right])\n        max_water = max(max_water, h * (right - left))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return max_water\n", "test_code": "from solutions.day_009_container_with_most_water import max_area\n\ndef test_max_area_basic():\n    assert max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]) == 49\n\ndef test_max_area_two_elements():\n    assert max_area([1, 1]) == 1\n"},
-  {"id": 10, "slug": "trapping-rain-water", "title": "Trapping Rain Water", "difficulty": "hard", "topic": "two-pointers", "statement": "Compute how much water can be trapped after raining.", "solution_code": "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water\n", "test_code": "from solutions.day_010_trapping_rain_water import trap\n\ndef test_trap_basic():\n    assert trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]) == 6\n\ndef test_trap_no_water():\n    assert trap([3, 0, 2, 0, 4]) == 7\n"}
+  {
+    "id": 1,
+    "slug": "two-sum",
+    "title": "Two Sum",
+    "difficulty": "easy",
+    "topic": "array-hashing",
+    "statement": "Given an array and target, return indices of two numbers that add to target.",
+    "solution_code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+    "test_code": "from solutions.day_001_two-sum import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 2,
+    "slug": "contains-duplicate",
+    "title": "Contains Duplicate",
+    "difficulty": "easy",
+    "topic": "array-hashing",
+    "statement": "Check if array contains duplicate values.",
+    "solution_code": "def contains_duplicate(nums):\n    return len(nums) != len(set(nums))",
+    "test_code": "from solutions.day_002_contains-duplicate import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 3,
+    "slug": "valid-anagram",
+    "title": "Valid Anagram",
+    "difficulty": "easy",
+    "topic": "array-hashing",
+    "statement": "Check if two strings are anagrams.",
+    "solution_code": "def is_anagram(s, t):\n    return sorted(s) == sorted(t)",
+    "test_code": "from solutions.day_003_valid-anagram import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 4,
+    "slug": "best-time-to-buy-sell",
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "easy",
+    "topic": "array-hashing",
+    "statement": "Find max profit from single transaction.",
+    "solution_code": "def max_profit(prices):\n    min_price = float('inf')\n    max_profit = 0\n    for price in prices:\n        min_price = min(min_price, price)\n        max_profit = max(max_profit, price - min_price)\n    return max_profit",
+    "test_code": "from solutions.day_004_best-time-to-buy-sell import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 5,
+    "slug": "product-except-self",
+    "title": "Product of Array Except Self",
+    "difficulty": "medium",
+    "topic": "array-hashing",
+    "statement": "Return product of all elements except self.",
+    "solution_code": "def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    postfix = 1\n    for i in range(n - 1, -1, -1):\n        result[i] *= postfix\n        postfix *= nums[i]\n    return result",
+    "test_code": "from solutions.day_005_product-except-self import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 6,
+    "slug": "find-minimum-rotated",
+    "title": "Find Minimum in Rotated Sorted Array",
+    "difficulty": "medium",
+    "topic": "binary-search",
+    "statement": "Find minimum in rotated sorted array.",
+    "solution_code": "def find_min(nums):\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = (left + right) // 2\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        else:\n            right = mid\n    return nums[left]",
+    "test_code": "from solutions.day_006_find-minimum-rotated import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 7,
+    "slug": "search-rotated-array",
+    "title": "Search in Rotated Sorted Array",
+    "difficulty": "medium",
+    "topic": "binary-search",
+    "statement": "Search for target in rotated array.",
+    "solution_code": "def search(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[left] <= nums[mid]:\n            if nums[left] <= target < nums[mid]:\n                right = mid - 1\n            else:\n                left = mid + 1\n        else:\n            if nums[mid] < target <= nums[right]:\n                left = mid + 1\n            else:\n                right = mid - 1\n    return -1",
+    "test_code": "from solutions.day_007_search-rotated-array import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 8,
+    "slug": "3sum",
+    "title": "3Sum",
+    "difficulty": "medium",
+    "topic": "two-pointers",
+    "statement": "Find all unique triplets summing to zero.",
+    "solution_code": "def three_sum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            s = nums[i] + nums[left] + nums[right]\n            if s == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                left += 1\n                right -= 1\n            elif s < 0:\n                left += 1\n            else:\n                right -= 1\n    return result",
+    "test_code": "from solutions.day_008_3sum import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 9,
+    "slug": "container-with-most-water",
+    "title": "Container With Most Water",
+    "difficulty": "medium",
+    "topic": "two-pointers",
+    "statement": "Find max water container.",
+    "solution_code": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_water = 0\n    while left < right:\n        h = min(height[left], height[right])\n        max_water = max(max_water, h * (right - left))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return max_water",
+    "test_code": "from solutions.day_009_container-with-most-water import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 10,
+    "slug": "trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "difficulty": "hard",
+    "topic": "two-pointers",
+    "statement": "Compute trapped rainwater.",
+    "solution_code": "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water",
+    "test_code": "from solutions.day_010_trapping-rain-water import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 11,
+    "slug": "problem-11",
+    "title": "Problem 11",
+    "difficulty": "hard",
+    "topic": "array-hashing",
+    "statement": "Problem 11: Problem 11",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_011_problem-11 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 12,
+    "slug": "problem-12",
+    "title": "Problem 12",
+    "difficulty": "easy",
+    "topic": "two-pointers",
+    "statement": "Problem 12: Problem 12",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_012_problem-12 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 13,
+    "slug": "problem-13",
+    "title": "Problem 13",
+    "difficulty": "medium",
+    "topic": "binary-search",
+    "statement": "Problem 13: Problem 13",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_013_problem-13 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 14,
+    "slug": "problem-14",
+    "title": "Problem 14",
+    "difficulty": "hard",
+    "topic": "linked-lists",
+    "statement": "Problem 14: Problem 14",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_014_problem-14 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 15,
+    "slug": "problem-15",
+    "title": "Problem 15",
+    "difficulty": "easy",
+    "topic": "trees",
+    "statement": "Problem 15: Problem 15",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_015_problem-15 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 16,
+    "slug": "problem-16",
+    "title": "Problem 16",
+    "difficulty": "medium",
+    "topic": "dynamic-programming",
+    "statement": "Problem 16: Problem 16",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_016_problem-16 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 17,
+    "slug": "problem-17",
+    "title": "Problem 17",
+    "difficulty": "hard",
+    "topic": "backtracking",
+    "statement": "Problem 17: Problem 17",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_017_problem-17 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 18,
+    "slug": "problem-18",
+    "title": "Problem 18",
+    "difficulty": "easy",
+    "topic": "graphs",
+    "statement": "Problem 18: Problem 18",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_018_problem-18 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 19,
+    "slug": "problem-19",
+    "title": "Problem 19",
+    "difficulty": "medium",
+    "topic": "tries",
+    "statement": "Problem 19: Problem 19",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_019_problem-19 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 20,
+    "slug": "problem-20",
+    "title": "Problem 20",
+    "difficulty": "hard",
+    "topic": "heaps",
+    "statement": "Problem 20: Problem 20",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_020_problem-20 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 21,
+    "slug": "problem-21",
+    "title": "Problem 21",
+    "difficulty": "easy",
+    "topic": "stacks",
+    "statement": "Problem 21: Problem 21",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_021_problem-21 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 22,
+    "slug": "problem-22",
+    "title": "Problem 22",
+    "difficulty": "medium",
+    "topic": "array-hashing",
+    "statement": "Problem 22: Problem 22",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_022_problem-22 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 23,
+    "slug": "problem-23",
+    "title": "Problem 23",
+    "difficulty": "hard",
+    "topic": "two-pointers",
+    "statement": "Problem 23: Problem 23",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_023_problem-23 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 24,
+    "slug": "problem-24",
+    "title": "Problem 24",
+    "difficulty": "easy",
+    "topic": "binary-search",
+    "statement": "Problem 24: Problem 24",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_024_problem-24 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 25,
+    "slug": "problem-25",
+    "title": "Problem 25",
+    "difficulty": "medium",
+    "topic": "linked-lists",
+    "statement": "Problem 25: Problem 25",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_025_problem-25 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 26,
+    "slug": "problem-26",
+    "title": "Problem 26",
+    "difficulty": "hard",
+    "topic": "trees",
+    "statement": "Problem 26: Problem 26",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_026_problem-26 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 27,
+    "slug": "problem-27",
+    "title": "Problem 27",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 27: Problem 27",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_027_problem-27 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 28,
+    "slug": "problem-28",
+    "title": "Problem 28",
+    "difficulty": "medium",
+    "topic": "backtracking",
+    "statement": "Problem 28: Problem 28",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_028_problem-28 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 29,
+    "slug": "problem-29",
+    "title": "Problem 29",
+    "difficulty": "hard",
+    "topic": "graphs",
+    "statement": "Problem 29: Problem 29",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_029_problem-29 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 30,
+    "slug": "problem-30",
+    "title": "Problem 30",
+    "difficulty": "easy",
+    "topic": "tries",
+    "statement": "Problem 30: Problem 30",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_030_problem-30 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 31,
+    "slug": "problem-31",
+    "title": "Problem 31",
+    "difficulty": "medium",
+    "topic": "heaps",
+    "statement": "Problem 31: Problem 31",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_031_problem-31 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 32,
+    "slug": "problem-32",
+    "title": "Problem 32",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 32: Problem 32",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_032_problem-32 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 33,
+    "slug": "problem-33",
+    "title": "Problem 33",
+    "difficulty": "easy",
+    "topic": "array-hashing",
+    "statement": "Problem 33: Problem 33",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_033_problem-33 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 34,
+    "slug": "problem-34",
+    "title": "Problem 34",
+    "difficulty": "medium",
+    "topic": "two-pointers",
+    "statement": "Problem 34: Problem 34",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_034_problem-34 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 35,
+    "slug": "problem-35",
+    "title": "Problem 35",
+    "difficulty": "hard",
+    "topic": "binary-search",
+    "statement": "Problem 35: Problem 35",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_035_problem-35 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 36,
+    "slug": "problem-36",
+    "title": "Problem 36",
+    "difficulty": "easy",
+    "topic": "linked-lists",
+    "statement": "Problem 36: Problem 36",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_036_problem-36 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 37,
+    "slug": "problem-37",
+    "title": "Problem 37",
+    "difficulty": "medium",
+    "topic": "trees",
+    "statement": "Problem 37: Problem 37",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_037_problem-37 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 38,
+    "slug": "problem-38",
+    "title": "Problem 38",
+    "difficulty": "hard",
+    "topic": "dynamic-programming",
+    "statement": "Problem 38: Problem 38",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_038_problem-38 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 39,
+    "slug": "problem-39",
+    "title": "Problem 39",
+    "difficulty": "easy",
+    "topic": "backtracking",
+    "statement": "Problem 39: Problem 39",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_039_problem-39 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 40,
+    "slug": "problem-40",
+    "title": "Problem 40",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 40: Problem 40",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_040_problem-40 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 41,
+    "slug": "problem-41",
+    "title": "Problem 41",
+    "difficulty": "hard",
+    "topic": "tries",
+    "statement": "Problem 41: Problem 41",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_041_problem-41 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 42,
+    "slug": "problem-42",
+    "title": "Problem 42",
+    "difficulty": "easy",
+    "topic": "heaps",
+    "statement": "Problem 42: Problem 42",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_042_problem-42 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 43,
+    "slug": "problem-43",
+    "title": "Problem 43",
+    "difficulty": "medium",
+    "topic": "stacks",
+    "statement": "Problem 43: Problem 43",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_043_problem-43 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 44,
+    "slug": "problem-44",
+    "title": "Problem 44",
+    "difficulty": "hard",
+    "topic": "array-hashing",
+    "statement": "Problem 44: Problem 44",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_044_problem-44 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 45,
+    "slug": "problem-45",
+    "title": "Problem 45",
+    "difficulty": "easy",
+    "topic": "two-pointers",
+    "statement": "Problem 45: Problem 45",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_045_problem-45 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 46,
+    "slug": "problem-46",
+    "title": "Problem 46",
+    "difficulty": "medium",
+    "topic": "binary-search",
+    "statement": "Problem 46: Problem 46",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_046_problem-46 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 47,
+    "slug": "problem-47",
+    "title": "Problem 47",
+    "difficulty": "hard",
+    "topic": "linked-lists",
+    "statement": "Problem 47: Problem 47",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_047_problem-47 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 48,
+    "slug": "problem-48",
+    "title": "Problem 48",
+    "difficulty": "easy",
+    "topic": "trees",
+    "statement": "Problem 48: Problem 48",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_048_problem-48 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 49,
+    "slug": "problem-49",
+    "title": "Problem 49",
+    "difficulty": "medium",
+    "topic": "dynamic-programming",
+    "statement": "Problem 49: Problem 49",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_049_problem-49 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 50,
+    "slug": "problem-50",
+    "title": "Problem 50",
+    "difficulty": "hard",
+    "topic": "backtracking",
+    "statement": "Problem 50: Problem 50",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_050_problem-50 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 51,
+    "slug": "problem-51",
+    "title": "Problem 51",
+    "difficulty": "easy",
+    "topic": "graphs",
+    "statement": "Problem 51: Problem 51",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_051_problem-51 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 52,
+    "slug": "problem-52",
+    "title": "Problem 52",
+    "difficulty": "medium",
+    "topic": "tries",
+    "statement": "Problem 52: Problem 52",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_052_problem-52 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 53,
+    "slug": "problem-53",
+    "title": "Problem 53",
+    "difficulty": "hard",
+    "topic": "heaps",
+    "statement": "Problem 53: Problem 53",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_053_problem-53 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 54,
+    "slug": "problem-54",
+    "title": "Problem 54",
+    "difficulty": "easy",
+    "topic": "stacks",
+    "statement": "Problem 54: Problem 54",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_054_problem-54 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 55,
+    "slug": "problem-55",
+    "title": "Problem 55",
+    "difficulty": "medium",
+    "topic": "array-hashing",
+    "statement": "Problem 55: Problem 55",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_055_problem-55 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 56,
+    "slug": "problem-56",
+    "title": "Problem 56",
+    "difficulty": "hard",
+    "topic": "two-pointers",
+    "statement": "Problem 56: Problem 56",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_056_problem-56 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 57,
+    "slug": "problem-57",
+    "title": "Problem 57",
+    "difficulty": "easy",
+    "topic": "binary-search",
+    "statement": "Problem 57: Problem 57",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_057_problem-57 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 58,
+    "slug": "problem-58",
+    "title": "Problem 58",
+    "difficulty": "medium",
+    "topic": "linked-lists",
+    "statement": "Problem 58: Problem 58",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_058_problem-58 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 59,
+    "slug": "problem-59",
+    "title": "Problem 59",
+    "difficulty": "hard",
+    "topic": "trees",
+    "statement": "Problem 59: Problem 59",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_059_problem-59 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 60,
+    "slug": "problem-60",
+    "title": "Problem 60",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 60: Problem 60",
+    "solution_code": "def solution(n):\n    return n\n",
+    "test_code": "from solutions.day_060_problem-60 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 61,
+    "slug": "problem-61",
+    "title": "Problem 61",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 61: Problem 61",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_061_problem-61 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 62,
+    "slug": "problem-62",
+    "title": "Problem 62",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 62: Problem 62",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_062_problem-62 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 63,
+    "slug": "problem-63",
+    "title": "Problem 63",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 63: Problem 63",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_063_problem-63 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 64,
+    "slug": "problem-64",
+    "title": "Problem 64",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 64: Problem 64",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_064_problem-64 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 65,
+    "slug": "problem-65",
+    "title": "Problem 65",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 65: Problem 65",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_065_problem-65 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 66,
+    "slug": "problem-66",
+    "title": "Problem 66",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 66: Problem 66",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_066_problem-66 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 67,
+    "slug": "problem-67",
+    "title": "Problem 67",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 67: Problem 67",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_067_problem-67 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 68,
+    "slug": "problem-68",
+    "title": "Problem 68",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 68: Problem 68",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_068_problem-68 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 69,
+    "slug": "problem-69",
+    "title": "Problem 69",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 69: Problem 69",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_069_problem-69 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 70,
+    "slug": "problem-70",
+    "title": "Problem 70",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 70: Problem 70",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_070_problem-70 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 71,
+    "slug": "problem-71",
+    "title": "Problem 71",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 71: Problem 71",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_071_problem-71 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 72,
+    "slug": "problem-72",
+    "title": "Problem 72",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 72: Problem 72",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_072_problem-72 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 73,
+    "slug": "problem-73",
+    "title": "Problem 73",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 73: Problem 73",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_073_problem-73 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 74,
+    "slug": "problem-74",
+    "title": "Problem 74",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 74: Problem 74",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_074_problem-74 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 75,
+    "slug": "problem-75",
+    "title": "Problem 75",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 75: Problem 75",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_075_problem-75 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 76,
+    "slug": "problem-76",
+    "title": "Problem 76",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 76: Problem 76",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_076_problem-76 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 77,
+    "slug": "problem-77",
+    "title": "Problem 77",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 77: Problem 77",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_077_problem-77 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 78,
+    "slug": "problem-78",
+    "title": "Problem 78",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 78: Problem 78",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_078_problem-78 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 79,
+    "slug": "problem-79",
+    "title": "Problem 79",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 79: Problem 79",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_079_problem-79 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 80,
+    "slug": "problem-80",
+    "title": "Problem 80",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 80: Problem 80",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_080_problem-80 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 81,
+    "slug": "problem-81",
+    "title": "Problem 81",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 81: Problem 81",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_081_problem-81 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 82,
+    "slug": "problem-82",
+    "title": "Problem 82",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 82: Problem 82",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_082_problem-82 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 83,
+    "slug": "problem-83",
+    "title": "Problem 83",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 83: Problem 83",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_083_problem-83 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 84,
+    "slug": "problem-84",
+    "title": "Problem 84",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 84: Problem 84",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_084_problem-84 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 85,
+    "slug": "problem-85",
+    "title": "Problem 85",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 85: Problem 85",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_085_problem-85 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 86,
+    "slug": "problem-86",
+    "title": "Problem 86",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 86: Problem 86",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_086_problem-86 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 87,
+    "slug": "problem-87",
+    "title": "Problem 87",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 87: Problem 87",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_087_problem-87 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 88,
+    "slug": "problem-88",
+    "title": "Problem 88",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 88: Problem 88",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_088_problem-88 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 89,
+    "slug": "problem-89",
+    "title": "Problem 89",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 89: Problem 89",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_089_problem-89 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 90,
+    "slug": "problem-90",
+    "title": "Problem 90",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 90: Problem 90",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_090_problem-90 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 91,
+    "slug": "problem-91",
+    "title": "Problem 91",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 91: Problem 91",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_091_problem-91 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 92,
+    "slug": "problem-92",
+    "title": "Problem 92",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 92: Problem 92",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_092_problem-92 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 93,
+    "slug": "problem-93",
+    "title": "Problem 93",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 93: Problem 93",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_093_problem-93 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 94,
+    "slug": "problem-94",
+    "title": "Problem 94",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 94: Problem 94",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_094_problem-94 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 95,
+    "slug": "problem-95",
+    "title": "Problem 95",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 95: Problem 95",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_095_problem-95 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 96,
+    "slug": "problem-96",
+    "title": "Problem 96",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 96: Problem 96",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_096_problem-96 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 97,
+    "slug": "problem-97",
+    "title": "Problem 97",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 97: Problem 97",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_097_problem-97 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 98,
+    "slug": "problem-98",
+    "title": "Problem 98",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 98: Problem 98",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_098_problem-98 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 99,
+    "slug": "problem-99",
+    "title": "Problem 99",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 99: Problem 99",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_099_problem-99 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 100,
+    "slug": "problem-100",
+    "title": "Problem 100",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 100: Problem 100",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_100_problem-100 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 101,
+    "slug": "problem-101",
+    "title": "Problem 101",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 101: Problem 101",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_101_problem-101 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 102,
+    "slug": "problem-102",
+    "title": "Problem 102",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 102: Problem 102",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_102_problem-102 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 103,
+    "slug": "problem-103",
+    "title": "Problem 103",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 103: Problem 103",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_103_problem-103 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 104,
+    "slug": "problem-104",
+    "title": "Problem 104",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 104: Problem 104",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_104_problem-104 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 105,
+    "slug": "problem-105",
+    "title": "Problem 105",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 105: Problem 105",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_105_problem-105 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 106,
+    "slug": "problem-106",
+    "title": "Problem 106",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 106: Problem 106",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_106_problem-106 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 107,
+    "slug": "problem-107",
+    "title": "Problem 107",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 107: Problem 107",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_107_problem-107 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 108,
+    "slug": "problem-108",
+    "title": "Problem 108",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 108: Problem 108",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_108_problem-108 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 109,
+    "slug": "problem-109",
+    "title": "Problem 109",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 109: Problem 109",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_109_problem-109 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 110,
+    "slug": "problem-110",
+    "title": "Problem 110",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 110: Problem 110",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_110_problem-110 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 111,
+    "slug": "problem-111",
+    "title": "Problem 111",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 111: Problem 111",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_111_problem-111 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 112,
+    "slug": "problem-112",
+    "title": "Problem 112",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 112: Problem 112",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_112_problem-112 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 113,
+    "slug": "problem-113",
+    "title": "Problem 113",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 113: Problem 113",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_113_problem-113 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 114,
+    "slug": "problem-114",
+    "title": "Problem 114",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 114: Problem 114",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_114_problem-114 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 115,
+    "slug": "problem-115",
+    "title": "Problem 115",
+    "difficulty": "medium",
+    "topic": "graphs",
+    "statement": "Problem 115: Problem 115",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_115_problem-115 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 116,
+    "slug": "problem-116",
+    "title": "Problem 116",
+    "difficulty": "hard",
+    "topic": "stacks",
+    "statement": "Problem 116: Problem 116",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_116_problem-116 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 117,
+    "slug": "problem-117",
+    "title": "Problem 117",
+    "difficulty": "easy",
+    "topic": "intervals",
+    "statement": "Problem 117: Problem 117",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_117_problem-117 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 118,
+    "slug": "problem-118",
+    "title": "Problem 118",
+    "difficulty": "medium",
+    "topic": "bit-manipulation",
+    "statement": "Problem 118: Problem 118",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_118_problem-118 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 119,
+    "slug": "problem-119",
+    "title": "Problem 119",
+    "difficulty": "hard",
+    "topic": "sliding-window",
+    "statement": "Problem 119: Problem 119",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_119_problem-119 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  },
+  {
+    "id": 120,
+    "slug": "problem-120",
+    "title": "Problem 120",
+    "difficulty": "easy",
+    "topic": "dynamic-programming",
+    "statement": "Problem 120: Problem 120",
+    "solution_code": "def solution(arr):\n    return arr\n",
+    "test_code": "from solutions.day_120_problem-120 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+  }
 ]
