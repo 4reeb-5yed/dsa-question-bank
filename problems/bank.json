@@ -7,7 +7,7 @@
     "topic": "array-hashing",
     "statement": "Given an array and target, return indices of two numbers that add to target.",
     "solution_code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
-    "test_code": "from solutions.day_001_two-sum import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_001_two_sum import two_sum\n\ndef test_two_sum_basic():\n    assert two_sum([2, 7, 11, 15], 9) == [0, 1]\n\ndef test_two_sum_negative():\n    assert two_sum([-1, -2, -3, -4, -5], -8) == [2, 4]\n"
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "topic": "array-hashing",
     "statement": "Check if array contains duplicate values.",
     "solution_code": "def contains_duplicate(nums):\n    return len(nums) != len(set(nums))",
-    "test_code": "from solutions.day_002_contains-duplicate import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_002_contains_duplicate import contains_duplicate\n\ndef test_has_duplicate():\n    assert contains_duplicate([1, 2, 3, 1]) == True\n\ndef test_no_duplicate():\n    assert contains_duplicate([1, 2, 3, 4]) == False\n"
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "topic": "array-hashing",
     "statement": "Check if two strings are anagrams.",
     "solution_code": "def is_anagram(s, t):\n    return sorted(s) == sorted(t)",
-    "test_code": "from solutions.day_003_valid-anagram import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_003_valid_anagram import is_anagram\n\ndef test_is_anagram():\n    assert is_anagram('anagram', 'nagaram') == True\n\ndef test_not_anagram():\n    assert is_anagram('rat', 'car') == False\n"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "topic": "array-hashing",
     "statement": "Find max profit from single transaction.",
     "solution_code": "def max_profit(prices):\n    min_price = float('inf')\n    max_profit = 0\n    for price in prices:\n        min_price = min(min_price, price)\n        max_profit = max(max_profit, price - min_price)\n    return max_profit",
-    "test_code": "from solutions.day_004_best-time-to-buy-sell import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_004_best_time_to_buy_sell import max_profit\n\ndef test_max_profit_basic():\n    assert max_profit([7, 1, 5, 3, 6, 4]) == 5\n\ndef test_decreasing_prices():\n    assert max_profit([7, 6, 4, 3, 1]) == 0\n"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "topic": "array-hashing",
     "statement": "Return product of all elements except self.",
     "solution_code": "def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    postfix = 1\n    for i in range(n - 1, -1, -1):\n        result[i] *= postfix\n        postfix *= nums[i]\n    return result",
-    "test_code": "from solutions.day_005_product-except-self import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_005_product_except_self import product_except_self\n\ndef test_product_basic():\n    assert product_except_self([1, 2, 3, 4]) == [24, 12, 8, 6]\n\ndef test_product_with_zeros():\n    assert product_except_self([1, 0, 3, 4]) == [0, 12, 0, 0]\n"
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "topic": "binary-search",
     "statement": "Find minimum in rotated sorted array.",
     "solution_code": "def find_min(nums):\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = (left + right) // 2\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        else:\n            right = mid\n    return nums[left]",
-    "test_code": "from solutions.day_006_find-minimum-rotated import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_006_find_minimum_rotated import find_min\n\ndef test_find_min_basic():\n    assert find_min([3, 4, 5, 1, 2]) == 1\n\ndef test_find_min_not_rotated():\n    assert find_min([1, 2, 3, 4, 5]) == 1\n"
   },
   {
     "id": 7,
@@ -67,7 +67,7 @@
     "topic": "binary-search",
     "statement": "Search for target in rotated array.",
     "solution_code": "def search(nums, target):\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[left] <= nums[mid]:\n            if nums[left] <= target < nums[mid]:\n                right = mid - 1\n            else:\n                left = mid + 1\n        else:\n            if nums[mid] < target <= nums[right]:\n                left = mid + 1\n            else:\n                right = mid - 1\n    return -1",
-    "test_code": "from solutions.day_007_search-rotated-array import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_007_search_rotated_array import search\n\ndef test_search_found():\n    assert search([4, 5, 6, 7, 0, 1, 2], 0) == 4\n\ndef test_search_not_found():\n    assert search([4, 5, 6, 7, 0, 1, 2], 3) == -1\n"
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "topic": "two-pointers",
     "statement": "Find all unique triplets summing to zero.",
     "solution_code": "def three_sum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            s = nums[i] + nums[left] + nums[right]\n            if s == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                left += 1\n                right -= 1\n            elif s < 0:\n                left += 1\n            else:\n                right -= 1\n    return result",
-    "test_code": "from solutions.day_008_3sum import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_008_3sum import three_sum\n\ndef test_three_sum_basic():\n    result = three_sum([-1, 0, 1, 2, -1, -4])\n    assert len(result) == 2\n\ndef test_three_sum_no_solution():\n    assert three_sum([1, 2, 3]) == []\n"
   },
   {
     "id": 9,
@@ -87,7 +87,7 @@
     "topic": "two-pointers",
     "statement": "Find max water container.",
     "solution_code": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_water = 0\n    while left < right:\n        h = min(height[left], height[right])\n        max_water = max(max_water, h * (right - left))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return max_water",
-    "test_code": "from solutions.day_009_container-with-most-water import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_009_container_with_most_water import max_area\n\ndef test_max_area_basic():\n    assert max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]) == 49\n\ndef test_max_area_two_elements():\n    assert max_area([1, 1]) == 1\n"
   },
   {
     "id": 10,
@@ -97,7 +97,7 @@
     "topic": "two-pointers",
     "statement": "Compute trapped rainwater.",
     "solution_code": "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water",
-    "test_code": "from solutions.day_010_trapping-rain-water import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_010_trapping_rain_water import trap\n\ndef test_trap_basic():\n    assert trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]) == 6\n\ndef test_trap_no_water():\n    assert trap([3, 0, 2, 0, 4]) == 7\n"
   },
   {
     "id": 11,
@@ -107,7 +107,7 @@
     "topic": "array-hashing",
     "statement": "Problem 11: Problem 11",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_011_problem-11 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_011_problem_11 import problem_11\n\ndef test_problem_11():\n    assert problem_11(5) == 5\n"
   },
   {
     "id": 12,
@@ -117,7 +117,7 @@
     "topic": "two-pointers",
     "statement": "Problem 12: Problem 12",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_012_problem-12 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_012_problem_12 import problem_12\n\ndef test_problem_12():\n    assert problem_12(5) == 5\n"
   },
   {
     "id": 13,
@@ -127,7 +127,7 @@
     "topic": "binary-search",
     "statement": "Problem 13: Problem 13",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_013_problem-13 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_013_problem_13 import problem_13\n\ndef test_problem_13():\n    assert problem_13(5) == 5\n"
   },
   {
     "id": 14,
@@ -137,7 +137,7 @@
     "topic": "linked-lists",
     "statement": "Problem 14: Problem 14",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_014_problem-14 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_014_problem_14 import problem_14\n\ndef test_problem_14():\n    assert problem_14(5) == 5\n"
   },
   {
     "id": 15,
@@ -147,7 +147,7 @@
     "topic": "trees",
     "statement": "Problem 15: Problem 15",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_015_problem-15 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_015_problem_15 import problem_15\n\ndef test_problem_15():\n    assert problem_15(5) == 5\n"
   },
   {
     "id": 16,
@@ -157,7 +157,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 16: Problem 16",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_016_problem-16 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_016_problem_16 import problem_16\n\ndef test_problem_16():\n    assert problem_16(5) == 5\n"
   },
   {
     "id": 17,
@@ -167,7 +167,7 @@
     "topic": "backtracking",
     "statement": "Problem 17: Problem 17",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_017_problem-17 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_017_problem_17 import problem_17\n\ndef test_problem_17():\n    assert problem_17(5) == 5\n"
   },
   {
     "id": 18,
@@ -177,7 +177,7 @@
     "topic": "graphs",
     "statement": "Problem 18: Problem 18",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_018_problem-18 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_018_problem_18 import problem_18\n\ndef test_problem_18():\n    assert problem_18(5) == 5\n"
   },
   {
     "id": 19,
@@ -187,7 +187,7 @@
     "topic": "tries",
     "statement": "Problem 19: Problem 19",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_019_problem-19 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_019_problem_19 import problem_19\n\ndef test_problem_19():\n    assert problem_19(5) == 5\n"
   },
   {
     "id": 20,
@@ -197,7 +197,7 @@
     "topic": "heaps",
     "statement": "Problem 20: Problem 20",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_020_problem-20 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_020_problem_20 import problem_20\n\ndef test_problem_20():\n    assert problem_20(5) == 5\n"
   },
   {
     "id": 21,
@@ -207,7 +207,7 @@
     "topic": "stacks",
     "statement": "Problem 21: Problem 21",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_021_problem-21 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_021_problem_21 import problem_21\n\ndef test_problem_21():\n    assert problem_21(5) == 5\n"
   },
   {
     "id": 22,
@@ -217,7 +217,7 @@
     "topic": "array-hashing",
     "statement": "Problem 22: Problem 22",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_022_problem-22 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_022_problem_22 import problem_22\n\ndef test_problem_22():\n    assert problem_22(5) == 5\n"
   },
   {
     "id": 23,
@@ -227,7 +227,7 @@
     "topic": "two-pointers",
     "statement": "Problem 23: Problem 23",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_023_problem-23 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_023_problem_23 import problem_23\n\ndef test_problem_23():\n    assert problem_23(5) == 5\n"
   },
   {
     "id": 24,
@@ -237,7 +237,7 @@
     "topic": "binary-search",
     "statement": "Problem 24: Problem 24",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_024_problem-24 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_024_problem_24 import problem_24\n\ndef test_problem_24():\n    assert problem_24(5) == 5\n"
   },
   {
     "id": 25,
@@ -247,7 +247,7 @@
     "topic": "linked-lists",
     "statement": "Problem 25: Problem 25",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_025_problem-25 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_025_problem_25 import problem_25\n\ndef test_problem_25():\n    assert problem_25(5) == 5\n"
   },
   {
     "id": 26,
@@ -257,7 +257,7 @@
     "topic": "trees",
     "statement": "Problem 26: Problem 26",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_026_problem-26 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_026_problem_26 import problem_26\n\ndef test_problem_26():\n    assert problem_26(5) == 5\n"
   },
   {
     "id": 27,
@@ -267,7 +267,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 27: Problem 27",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_027_problem-27 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_027_problem_27 import problem_27\n\ndef test_problem_27():\n    assert problem_27(5) == 5\n"
   },
   {
     "id": 28,
@@ -277,7 +277,7 @@
     "topic": "backtracking",
     "statement": "Problem 28: Problem 28",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_028_problem-28 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_028_problem_28 import problem_28\n\ndef test_problem_28():\n    assert problem_28(5) == 5\n"
   },
   {
     "id": 29,
@@ -287,7 +287,7 @@
     "topic": "graphs",
     "statement": "Problem 29: Problem 29",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_029_problem-29 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_029_problem_29 import problem_29\n\ndef test_problem_29():\n    assert problem_29(5) == 5\n"
   },
   {
     "id": 30,
@@ -297,7 +297,7 @@
     "topic": "tries",
     "statement": "Problem 30: Problem 30",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_030_problem-30 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_030_problem_30 import problem_30\n\ndef test_problem_30():\n    assert problem_30(5) == 5\n"
   },
   {
     "id": 31,
@@ -307,7 +307,7 @@
     "topic": "heaps",
     "statement": "Problem 31: Problem 31",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_031_problem-31 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_031_problem_31 import problem_31\n\ndef test_problem_31():\n    assert problem_31(5) == 5\n"
   },
   {
     "id": 32,
@@ -317,7 +317,7 @@
     "topic": "stacks",
     "statement": "Problem 32: Problem 32",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_032_problem-32 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_032_problem_32 import problem_32\n\ndef test_problem_32():\n    assert problem_32(5) == 5\n"
   },
   {
     "id": 33,
@@ -327,7 +327,7 @@
     "topic": "array-hashing",
     "statement": "Problem 33: Problem 33",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_033_problem-33 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_033_problem_33 import problem_33\n\ndef test_problem_33():\n    assert problem_33(5) == 5\n"
   },
   {
     "id": 34,
@@ -337,7 +337,7 @@
     "topic": "two-pointers",
     "statement": "Problem 34: Problem 34",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_034_problem-34 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_034_problem_34 import problem_34\n\ndef test_problem_34():\n    assert problem_34(5) == 5\n"
   },
   {
     "id": 35,
@@ -347,7 +347,7 @@
     "topic": "binary-search",
     "statement": "Problem 35: Problem 35",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_035_problem-35 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_035_problem_35 import problem_35\n\ndef test_problem_35():\n    assert problem_35(5) == 5\n"
   },
   {
     "id": 36,
@@ -357,7 +357,7 @@
     "topic": "linked-lists",
     "statement": "Problem 36: Problem 36",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_036_problem-36 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_036_problem_36 import problem_36\n\ndef test_problem_36():\n    assert problem_36(5) == 5\n"
   },
   {
     "id": 37,
@@ -367,7 +367,7 @@
     "topic": "trees",
     "statement": "Problem 37: Problem 37",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_037_problem-37 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_037_problem_37 import problem_37\n\ndef test_problem_37():\n    assert problem_37(5) == 5\n"
   },
   {
     "id": 38,
@@ -377,7 +377,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 38: Problem 38",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_038_problem-38 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_038_problem_38 import problem_38\n\ndef test_problem_38():\n    assert problem_38(5) == 5\n"
   },
   {
     "id": 39,
@@ -387,7 +387,7 @@
     "topic": "backtracking",
     "statement": "Problem 39: Problem 39",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_039_problem-39 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_039_problem_39 import problem_39\n\ndef test_problem_39():\n    assert problem_39(5) == 5\n"
   },
   {
     "id": 40,
@@ -397,7 +397,7 @@
     "topic": "graphs",
     "statement": "Problem 40: Problem 40",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_040_problem-40 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_040_problem_40 import problem_40\n\ndef test_problem_40():\n    assert problem_40(5) == 5\n"
   },
   {
     "id": 41,
@@ -407,7 +407,7 @@
     "topic": "tries",
     "statement": "Problem 41: Problem 41",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_041_problem-41 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_041_problem_41 import problem_41\n\ndef test_problem_41():\n    assert problem_41(5) == 5\n"
   },
   {
     "id": 42,
@@ -417,7 +417,7 @@
     "topic": "heaps",
     "statement": "Problem 42: Problem 42",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_042_problem-42 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_042_problem_42 import problem_42\n\ndef test_problem_42():\n    assert problem_42(5) == 5\n"
   },
   {
     "id": 43,
@@ -427,7 +427,7 @@
     "topic": "stacks",
     "statement": "Problem 43: Problem 43",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_043_problem-43 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_043_problem_43 import problem_43\n\ndef test_problem_43():\n    assert problem_43(5) == 5\n"
   },
   {
     "id": 44,
@@ -437,7 +437,7 @@
     "topic": "array-hashing",
     "statement": "Problem 44: Problem 44",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_044_problem-44 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_044_problem_44 import problem_44\n\ndef test_problem_44():\n    assert problem_44(5) == 5\n"
   },
   {
     "id": 45,
@@ -447,7 +447,7 @@
     "topic": "two-pointers",
     "statement": "Problem 45: Problem 45",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_045_problem-45 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_045_problem_45 import problem_45\n\ndef test_problem_45():\n    assert problem_45(5) == 5\n"
   },
   {
     "id": 46,
@@ -457,7 +457,7 @@
     "topic": "binary-search",
     "statement": "Problem 46: Problem 46",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_046_problem-46 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_046_problem_46 import problem_46\n\ndef test_problem_46():\n    assert problem_46(5) == 5\n"
   },
   {
     "id": 47,
@@ -467,7 +467,7 @@
     "topic": "linked-lists",
     "statement": "Problem 47: Problem 47",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_047_problem-47 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_047_problem_47 import problem_47\n\ndef test_problem_47():\n    assert problem_47(5) == 5\n"
   },
   {
     "id": 48,
@@ -477,7 +477,7 @@
     "topic": "trees",
     "statement": "Problem 48: Problem 48",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_048_problem-48 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_048_problem_48 import problem_48\n\ndef test_problem_48():\n    assert problem_48(5) == 5\n"
   },
   {
     "id": 49,
@@ -487,7 +487,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 49: Problem 49",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_049_problem-49 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_049_problem_49 import problem_49\n\ndef test_problem_49():\n    assert problem_49(5) == 5\n"
   },
   {
     "id": 50,
@@ -497,7 +497,7 @@
     "topic": "backtracking",
     "statement": "Problem 50: Problem 50",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_050_problem-50 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_050_problem_50 import problem_50\n\ndef test_problem_50():\n    assert problem_50(5) == 5\n"
   },
   {
     "id": 51,
@@ -507,7 +507,7 @@
     "topic": "graphs",
     "statement": "Problem 51: Problem 51",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_051_problem-51 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_051_problem_51 import problem_51\n\ndef test_problem_51():\n    assert problem_51(5) == 5\n"
   },
   {
     "id": 52,
@@ -517,7 +517,7 @@
     "topic": "tries",
     "statement": "Problem 52: Problem 52",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_052_problem-52 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_052_problem_52 import problem_52\n\ndef test_problem_52():\n    assert problem_52(5) == 5\n"
   },
   {
     "id": 53,
@@ -527,7 +527,7 @@
     "topic": "heaps",
     "statement": "Problem 53: Problem 53",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_053_problem-53 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_053_problem_53 import problem_53\n\ndef test_problem_53():\n    assert problem_53(5) == 5\n"
   },
   {
     "id": 54,
@@ -537,7 +537,7 @@
     "topic": "stacks",
     "statement": "Problem 54: Problem 54",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_054_problem-54 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_054_problem_54 import problem_54\n\ndef test_problem_54():\n    assert problem_54(5) == 5\n"
   },
   {
     "id": 55,
@@ -547,7 +547,7 @@
     "topic": "array-hashing",
     "statement": "Problem 55: Problem 55",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_055_problem-55 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_055_problem_55 import problem_55\n\ndef test_problem_55():\n    assert problem_55(5) == 5\n"
   },
   {
     "id": 56,
@@ -557,7 +557,7 @@
     "topic": "two-pointers",
     "statement": "Problem 56: Problem 56",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_056_problem-56 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_056_problem_56 import problem_56\n\ndef test_problem_56():\n    assert problem_56(5) == 5\n"
   },
   {
     "id": 57,
@@ -567,7 +567,7 @@
     "topic": "binary-search",
     "statement": "Problem 57: Problem 57",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_057_problem-57 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_057_problem_57 import problem_57\n\ndef test_problem_57():\n    assert problem_57(5) == 5\n"
   },
   {
     "id": 58,
@@ -577,7 +577,7 @@
     "topic": "linked-lists",
     "statement": "Problem 58: Problem 58",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_058_problem-58 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_058_problem_58 import problem_58\n\ndef test_problem_58():\n    assert problem_58(5) == 5\n"
   },
   {
     "id": 59,
@@ -587,7 +587,7 @@
     "topic": "trees",
     "statement": "Problem 59: Problem 59",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_059_problem-59 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_059_problem_59 import problem_59\n\ndef test_problem_59():\n    assert problem_59(5) == 5\n"
   },
   {
     "id": 60,
@@ -597,7 +597,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 60: Problem 60",
     "solution_code": "def solution(n):\n    return n\n",
-    "test_code": "from solutions.day_060_problem-60 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_060_problem_60 import problem_60\n\ndef test_problem_60():\n    assert problem_60(5) == 5\n"
   },
   {
     "id": 61,
@@ -607,7 +607,7 @@
     "topic": "graphs",
     "statement": "Problem 61: Problem 61",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_061_problem-61 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_061_problem_61 import problem_61\n\ndef test_problem_61():\n    assert problem_61(5) == 5\n"
   },
   {
     "id": 62,
@@ -617,7 +617,7 @@
     "topic": "stacks",
     "statement": "Problem 62: Problem 62",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_062_problem-62 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_062_problem_62 import problem_62\n\ndef test_problem_62():\n    assert problem_62(5) == 5\n"
   },
   {
     "id": 63,
@@ -627,7 +627,7 @@
     "topic": "intervals",
     "statement": "Problem 63: Problem 63",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_063_problem-63 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_063_problem_63 import problem_63\n\ndef test_problem_63():\n    assert problem_63(5) == 5\n"
   },
   {
     "id": 64,
@@ -637,7 +637,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 64: Problem 64",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_064_problem-64 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_064_problem_64 import problem_64\n\ndef test_problem_64():\n    assert problem_64(5) == 5\n"
   },
   {
     "id": 65,
@@ -647,7 +647,7 @@
     "topic": "sliding-window",
     "statement": "Problem 65: Problem 65",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_065_problem-65 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_065_problem_65 import problem_65\n\ndef test_problem_65():\n    assert problem_65(5) == 5\n"
   },
   {
     "id": 66,
@@ -657,7 +657,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 66: Problem 66",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_066_problem-66 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_066_problem_66 import problem_66\n\ndef test_problem_66():\n    assert problem_66(5) == 5\n"
   },
   {
     "id": 67,
@@ -667,7 +667,7 @@
     "topic": "graphs",
     "statement": "Problem 67: Problem 67",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_067_problem-67 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_067_problem_67 import problem_67\n\ndef test_problem_67():\n    assert problem_67(5) == 5\n"
   },
   {
     "id": 68,
@@ -677,7 +677,7 @@
     "topic": "stacks",
     "statement": "Problem 68: Problem 68",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_068_problem-68 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_068_problem_68 import problem_68\n\ndef test_problem_68():\n    assert problem_68(5) == 5\n"
   },
   {
     "id": 69,
@@ -687,7 +687,7 @@
     "topic": "intervals",
     "statement": "Problem 69: Problem 69",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_069_problem-69 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_069_problem_69 import problem_69\n\ndef test_problem_69():\n    assert problem_69(5) == 5\n"
   },
   {
     "id": 70,
@@ -697,7 +697,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 70: Problem 70",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_070_problem-70 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_070_problem_70 import problem_70\n\ndef test_problem_70():\n    assert problem_70(5) == 5\n"
   },
   {
     "id": 71,
@@ -707,7 +707,7 @@
     "topic": "sliding-window",
     "statement": "Problem 71: Problem 71",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_071_problem-71 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_071_problem_71 import problem_71\n\ndef test_problem_71():\n    assert problem_71(5) == 5\n"
   },
   {
     "id": 72,
@@ -717,7 +717,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 72: Problem 72",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_072_problem-72 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_072_problem_72 import problem_72\n\ndef test_problem_72():\n    assert problem_72(5) == 5\n"
   },
   {
     "id": 73,
@@ -727,7 +727,7 @@
     "topic": "graphs",
     "statement": "Problem 73: Problem 73",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_073_problem-73 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_073_problem_73 import problem_73\n\ndef test_problem_73():\n    assert problem_73(5) == 5\n"
   },
   {
     "id": 74,
@@ -737,7 +737,7 @@
     "topic": "stacks",
     "statement": "Problem 74: Problem 74",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_074_problem-74 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_074_problem_74 import problem_74\n\ndef test_problem_74():\n    assert problem_74(5) == 5\n"
   },
   {
     "id": 75,
@@ -747,7 +747,7 @@
     "topic": "intervals",
     "statement": "Problem 75: Problem 75",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_075_problem-75 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_075_problem_75 import problem_75\n\ndef test_problem_75():\n    assert problem_75(5) == 5\n"
   },
   {
     "id": 76,
@@ -757,7 +757,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 76: Problem 76",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_076_problem-76 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_076_problem_76 import problem_76\n\ndef test_problem_76():\n    assert problem_76(5) == 5\n"
   },
   {
     "id": 77,
@@ -767,7 +767,7 @@
     "topic": "sliding-window",
     "statement": "Problem 77: Problem 77",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_077_problem-77 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_077_problem_77 import problem_77\n\ndef test_problem_77():\n    assert problem_77(5) == 5\n"
   },
   {
     "id": 78,
@@ -777,7 +777,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 78: Problem 78",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_078_problem-78 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_078_problem_78 import problem_78\n\ndef test_problem_78():\n    assert problem_78(5) == 5\n"
   },
   {
     "id": 79,
@@ -787,7 +787,7 @@
     "topic": "graphs",
     "statement": "Problem 79: Problem 79",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_079_problem-79 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_079_problem_79 import problem_79\n\ndef test_problem_79():\n    assert problem_79(5) == 5\n"
   },
   {
     "id": 80,
@@ -797,7 +797,7 @@
     "topic": "stacks",
     "statement": "Problem 80: Problem 80",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_080_problem-80 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_080_problem_80 import problem_80\n\ndef test_problem_80():\n    assert problem_80(5) == 5\n"
   },
   {
     "id": 81,
@@ -807,7 +807,7 @@
     "topic": "intervals",
     "statement": "Problem 81: Problem 81",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_081_problem-81 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_081_problem_81 import problem_81\n\ndef test_problem_81():\n    assert problem_81(5) == 5\n"
   },
   {
     "id": 82,
@@ -817,7 +817,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 82: Problem 82",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_082_problem-82 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_082_problem_82 import problem_82\n\ndef test_problem_82():\n    assert problem_82(5) == 5\n"
   },
   {
     "id": 83,
@@ -827,7 +827,7 @@
     "topic": "sliding-window",
     "statement": "Problem 83: Problem 83",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_083_problem-83 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_083_problem_83 import problem_83\n\ndef test_problem_83():\n    assert problem_83(5) == 5\n"
   },
   {
     "id": 84,
@@ -837,7 +837,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 84: Problem 84",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_084_problem-84 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_084_problem_84 import problem_84\n\ndef test_problem_84():\n    assert problem_84(5) == 5\n"
   },
   {
     "id": 85,
@@ -847,7 +847,7 @@
     "topic": "graphs",
     "statement": "Problem 85: Problem 85",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_085_problem-85 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_085_problem_85 import problem_85\n\ndef test_problem_85():\n    assert problem_85(5) == 5\n"
   },
   {
     "id": 86,
@@ -857,7 +857,7 @@
     "topic": "stacks",
     "statement": "Problem 86: Problem 86",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_086_problem-86 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_086_problem_86 import problem_86\n\ndef test_problem_86():\n    assert problem_86(5) == 5\n"
   },
   {
     "id": 87,
@@ -867,7 +867,7 @@
     "topic": "intervals",
     "statement": "Problem 87: Problem 87",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_087_problem-87 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_087_problem_87 import problem_87\n\ndef test_problem_87():\n    assert problem_87(5) == 5\n"
   },
   {
     "id": 88,
@@ -877,7 +877,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 88: Problem 88",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_088_problem-88 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_088_problem_88 import problem_88\n\ndef test_problem_88():\n    assert problem_88(5) == 5\n"
   },
   {
     "id": 89,
@@ -887,7 +887,7 @@
     "topic": "sliding-window",
     "statement": "Problem 89: Problem 89",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_089_problem-89 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_089_problem_89 import problem_89\n\ndef test_problem_89():\n    assert problem_89(5) == 5\n"
   },
   {
     "id": 90,
@@ -897,7 +897,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 90: Problem 90",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_090_problem-90 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_090_problem_90 import problem_90\n\ndef test_problem_90():\n    assert problem_90(5) == 5\n"
   },
   {
     "id": 91,
@@ -907,7 +907,7 @@
     "topic": "graphs",
     "statement": "Problem 91: Problem 91",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_091_problem-91 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_091_problem_91 import problem_91\n\ndef test_problem_91():\n    assert problem_91(5) == 5\n"
   },
   {
     "id": 92,
@@ -917,7 +917,7 @@
     "topic": "stacks",
     "statement": "Problem 92: Problem 92",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_092_problem-92 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_092_problem_92 import problem_92\n\ndef test_problem_92():\n    assert problem_92(5) == 5\n"
   },
   {
     "id": 93,
@@ -927,7 +927,7 @@
     "topic": "intervals",
     "statement": "Problem 93: Problem 93",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_093_problem-93 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_093_problem_93 import problem_93\n\ndef test_problem_93():\n    assert problem_93(5) == 5\n"
   },
   {
     "id": 94,
@@ -937,7 +937,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 94: Problem 94",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_094_problem-94 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_094_problem_94 import problem_94\n\ndef test_problem_94():\n    assert problem_94(5) == 5\n"
   },
   {
     "id": 95,
@@ -947,7 +947,7 @@
     "topic": "sliding-window",
     "statement": "Problem 95: Problem 95",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_095_problem-95 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_095_problem_95 import problem_95\n\ndef test_problem_95():\n    assert problem_95(5) == 5\n"
   },
   {
     "id": 96,
@@ -957,7 +957,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 96: Problem 96",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_096_problem-96 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_096_problem_96 import problem_96\n\ndef test_problem_96():\n    assert problem_96(5) == 5\n"
   },
   {
     "id": 97,
@@ -967,7 +967,7 @@
     "topic": "graphs",
     "statement": "Problem 97: Problem 97",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_097_problem-97 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_097_problem_97 import problem_97\n\ndef test_problem_97():\n    assert problem_97(5) == 5\n"
   },
   {
     "id": 98,
@@ -977,7 +977,7 @@
     "topic": "stacks",
     "statement": "Problem 98: Problem 98",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_098_problem-98 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_098_problem_98 import problem_98\n\ndef test_problem_98():\n    assert problem_98(5) == 5\n"
   },
   {
     "id": 99,
@@ -987,7 +987,7 @@
     "topic": "intervals",
     "statement": "Problem 99: Problem 99",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_099_problem-99 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_099_problem_99 import problem_99\n\ndef test_problem_99():\n    assert problem_99(5) == 5\n"
   },
   {
     "id": 100,
@@ -997,7 +997,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 100: Problem 100",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_100_problem-100 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_100_problem_100 import problem_100\n\ndef test_problem_100():\n    assert problem_100(5) == 5\n"
   },
   {
     "id": 101,
@@ -1007,7 +1007,7 @@
     "topic": "sliding-window",
     "statement": "Problem 101: Problem 101",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_101_problem-101 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_101_problem_101 import problem_101\n\ndef test_problem_101():\n    assert problem_101(5) == 5\n"
   },
   {
     "id": 102,
@@ -1017,7 +1017,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 102: Problem 102",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_102_problem-102 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_102_problem_102 import problem_102\n\ndef test_problem_102():\n    assert problem_102(5) == 5\n"
   },
   {
     "id": 103,
@@ -1027,7 +1027,7 @@
     "topic": "graphs",
     "statement": "Problem 103: Problem 103",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_103_problem-103 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_103_problem_103 import problem_103\n\ndef test_problem_103():\n    assert problem_103(5) == 5\n"
   },
   {
     "id": 104,
@@ -1037,7 +1037,7 @@
     "topic": "stacks",
     "statement": "Problem 104: Problem 104",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_104_problem-104 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_104_problem_104 import problem_104\n\ndef test_problem_104():\n    assert problem_104(5) == 5\n"
   },
   {
     "id": 105,
@@ -1047,7 +1047,7 @@
     "topic": "intervals",
     "statement": "Problem 105: Problem 105",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_105_problem-105 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_105_problem_105 import problem_105\n\ndef test_problem_105():\n    assert problem_105(5) == 5\n"
   },
   {
     "id": 106,
@@ -1057,7 +1057,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 106: Problem 106",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_106_problem-106 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_106_problem_106 import problem_106\n\ndef test_problem_106():\n    assert problem_106(5) == 5\n"
   },
   {
     "id": 107,
@@ -1067,7 +1067,7 @@
     "topic": "sliding-window",
     "statement": "Problem 107: Problem 107",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_107_problem-107 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_107_problem_107 import problem_107\n\ndef test_problem_107():\n    assert problem_107(5) == 5\n"
   },
   {
     "id": 108,
@@ -1077,7 +1077,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 108: Problem 108",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_108_problem-108 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_108_problem_108 import problem_108\n\ndef test_problem_108():\n    assert problem_108(5) == 5\n"
   },
   {
     "id": 109,
@@ -1087,7 +1087,7 @@
     "topic": "graphs",
     "statement": "Problem 109: Problem 109",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_109_problem-109 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_109_problem_109 import problem_109\n\ndef test_problem_109():\n    assert problem_109(5) == 5\n"
   },
   {
     "id": 110,
@@ -1097,7 +1097,7 @@
     "topic": "stacks",
     "statement": "Problem 110: Problem 110",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_110_problem-110 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_110_problem_110 import problem_110\n\ndef test_problem_110():\n    assert problem_110(5) == 5\n"
   },
   {
     "id": 111,
@@ -1107,7 +1107,7 @@
     "topic": "intervals",
     "statement": "Problem 111: Problem 111",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_111_problem-111 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_111_problem_111 import problem_111\n\ndef test_problem_111():\n    assert problem_111(5) == 5\n"
   },
   {
     "id": 112,
@@ -1117,7 +1117,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 112: Problem 112",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_112_problem-112 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_112_problem_112 import problem_112\n\ndef test_problem_112():\n    assert problem_112(5) == 5\n"
   },
   {
     "id": 113,
@@ -1127,7 +1127,7 @@
     "topic": "sliding-window",
     "statement": "Problem 113: Problem 113",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_113_problem-113 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_113_problem_113 import problem_113\n\ndef test_problem_113():\n    assert problem_113(5) == 5\n"
   },
   {
     "id": 114,
@@ -1137,7 +1137,7 @@
     "topic": "dynamic-programming",
     "statement": "Problem 114: Problem 114",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_114_problem-114 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_114_problem_114 import problem_114\n\ndef test_problem_114():\n    assert problem_114(5) == 5\n"
   },
   {
     "id": 115,
@@ -1147,7 +1147,7 @@
     "topic": "graphs",
     "statement": "Problem 115: Problem 115",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_115_problem-115 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_115_problem_115 import problem_115\n\ndef test_problem_115():\n    assert problem_115(5) == 5\n"
   },
   {
     "id": 116,
@@ -1157,7 +1157,7 @@
     "topic": "stacks",
     "statement": "Problem 116: Problem 116",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_116_problem-116 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_116_problem_116 import problem_116\n\ndef test_problem_116():\n    assert problem_116(5) == 5\n"
   },
   {
     "id": 117,
@@ -1167,7 +1167,7 @@
     "topic": "intervals",
     "statement": "Problem 117: Problem 117",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_117_problem-117 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_117_problem_117 import problem_117\n\ndef test_problem_117():\n    assert problem_117(5) == 5\n"
   },
   {
     "id": 118,
@@ -1177,7 +1177,7 @@
     "topic": "bit-manipulation",
     "statement": "Problem 118: Problem 118",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_118_problem-118 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_118_problem_118 import problem_118\n\ndef test_problem_118():\n    assert problem_118(5) == 5\n"
   },
   {
     "id": 119,
@@ -1187,7 +1187,7 @@
     "topic": "sliding-window",
     "statement": "Problem 119: Problem 119",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_119_problem-119 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_119_problem_119 import problem_119\n\ndef test_problem_119():\n    assert problem_119(5) == 5\n"
   },
   {
     "id": 120,
@@ -1197,6 +1197,6 @@
     "topic": "dynamic-programming",
     "statement": "Problem 120: Problem 120",
     "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_120_problem-120 import solution\n\ndef test_solution():\n    assert solution(5) == 5\n"
+    "test_code": "from solutions.day_120_problem_120 import problem_120\n\ndef test_problem_120():\n    assert problem_120(5) == 5\n"
   }
 ]
