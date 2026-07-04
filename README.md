@@ -2,6 +2,8 @@
 
 The **content bank** for the 100-Days-of-DSA automation system — contains all 120 DSA problems with solutions and tests.
 
+📖 **[Pipeline Build Guide](https://4reeb-5yed.github.io/100-days-of-dsa/)** — Step-by-step instructions to build this CI/CD system
+
 ## Overview
 
 This repository holds the curated collection of Data Structures and Algorithms problems that power the daily automation. Each entry includes:
