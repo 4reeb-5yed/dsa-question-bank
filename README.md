@@ -41,27 +41,28 @@ Each problem in `bank.json` follows this structure:
 
 | Topic | Count | Examples |
 |-------|-------|----------|
-| array-hashing | ~15 | Two Sum, Contains Duplicate, Valid Anagram |
-| two-pointers | ~10 | 3Sum, Container With Most Water |
-| binary-search | ~10 | Find Minimum, Search Rotated Array |
-| sliding-window | ~10 | Maximum Sum Subarray |
-| stacks | ~8 | Valid Parentheses |
-| dynamic-programming | ~20 | Fibonacci, Climbing Stairs |
-| graphs | ~15 | Number of Islands, Clone Graph |
-| intervals | ~8 | Merge Intervals |
-| bit-manipulation | ~8 | Single Number |
-| linked-lists | ~8 | Reverse Linked List |
-| trees | ~10 | Binary Tree Inversion |
-| tries | ~3 | Implement Trie |
-| heaps | ~5 | Kth Largest Element |
+| array-hashing | 10 | Two Sum, Contains Duplicate, Valid Anagram |
+| backtracking | 4 | Word Search, N-Queens |
+| binary-search | 7 | Find Minimum, Search Rotated Array |
+| bit-manipulation | 10 | Single Number, Reverse Bits |
+| dynamic-programming | 15 | Climbing Stairs, Coin Change, House Robber |
+| graphs | 14 | Number of Islands, Clone Graph, Course Schedule |
+| heaps | 4 | Kth Largest Element, Median Data Stream |
+| intervals | 10 | Merge Intervals, Meeting Rooms |
+| linked-lists | 5 | Reverse Linked List, Merge Two Lists |
+| sliding-window | 10 | Maximum Sum Subarray, Longest Substring |
+| stacks | 14 | Valid Parentheses, Min Stack, Largest Rectangle |
+| trees | 5 | Max Depth, Invert Tree, Validate BST |
+| tries | 4 | Implement Trie, Word Search II |
+| two-pointers | 8 | 3Sum, Container With Most Water |
 
 ## Difficulty Distribution
 
 | Difficulty | Count |
 |------------|-------|
-| Easy | ~35 |
-| Medium | ~50 |
-| Hard | ~35 |
+| Easy | 41 |
+| Medium | 41 |
+| Hard | 38 |
 
 ## Access
 
