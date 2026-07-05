@@ -54,28 +54,32 @@ Each problem in `bank.json` follows this structure:
 
 | Topic | Count | Examples |
 |-------|-------|----------|
-| array-hashing | 10 | Two Sum, Contains Duplicate, Valid Anagram |
-| backtracking | 4 | Word Search, N-Queens |
-| binary-search | 7 | Find Minimum, Search Rotated Array |
-| bit-manipulation | 10 | Single Number, Reverse Bits |
-| dynamic-programming | 15 | Climbing Stairs, Coin Change, House Robber |
-| graphs | 14 | Number of Islands, Clone Graph, Course Schedule |
-| heaps | 4 | Kth Largest Element, Median Data Stream |
-| intervals | 10 | Merge Intervals, Meeting Rooms |
-| linked-lists | 5 | Reverse Linked List, Merge Two Lists |
-| sliding-window | 10 | Maximum Sum Subarray, Longest Substring |
-| stacks | 14 | Valid Parentheses, Min Stack, Largest Rectangle |
-| trees | 5 | Max Depth, Invert Tree, Validate BST |
-| tries | 4 | Implement Trie, Word Search II |
-| two-pointers | 8 | 3Sum, Container With Most Water |
+| array-hashing | 13 | Two Sum, Contains Duplicate, Valid Anagram |
+| backtracking | 7 | Word Search, N-Queens |
+| binary-search | 5 | Find Minimum, Search Rotated Array |
+| bit-manipulation | 8 | Single Number, Reverse Bits |
+| design | 2 | LRU Cache, Min Stack |
+| dynamic-programming | 16 | Climbing Stairs, Coin Change, House Robber |
+| graphs | 13 | Number of Islands, Clone Graph, Course Schedule |
+| greedy | 2 | Jump Game, Gas Station |
+| heaps | 3 | Kth Largest Element, Median Data Stream |
+| intervals | 7 | Merge Intervals, Meeting Rooms |
+| linked-lists | 3 | Reverse Linked List, Merge Two Lists |
+| math | 5 | Add Two Numbers, Multiply Strings |
+| sliding-window | 8 | Maximum Sum Subarray, Longest Substring |
+| stacks | 10 | Valid Parentheses, Min Stack, Largest Rectangle |
+| strings | 2 | Longest Substring, Valid Palindrome |
+| trees | 8 | Max Depth, Invert Tree, Validate BST |
+| tries | 1 | Implement Trie |
+| two-pointers | 7 | 3Sum, Container With Most Water |
 
 ## Difficulty Distribution
 
 | Difficulty | Count |
 |------------|-------|
-| Easy | 41 |
-| Medium | 41 |
-| Hard | 38 |
+| Easy | 39 |
+| Medium | 55 |
+| Hard | 26 |
 
 ## Access
 
