@@ -81,9 +81,6 @@ Each problem in `bank.json` follows this structure:
 | Medium | 55 |
 | Hard | 26 |
 
-## Access
-
-This repository is **read-only** for the automation. The `dsa-bot` uses a fine-grained PAT with only `contents: read` permissions.
 
 ## Related Repos
 
