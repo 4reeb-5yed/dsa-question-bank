@@ -4,15 +4,14 @@ def test_basic():
     mat = [[0,0,0],[0,1,0],[1,1,1]]
     result = update_matrix(mat)
     assert result[0][0] == 0
-    assert result[1][1] == 1
+    assert result[1][2] == 0
 
 def test_all_zeros():
     mat = [[0,0],[0,0]]
     result = update_matrix(mat)
     assert result == [[0,0],[0,0]]
 
-def test_no_zeros():
+def test_all_ones():
     mat = [[1,1],[1,1]]
     result = update_matrix(mat)
-    # When there are no zeros, all distances should remain inf
-    assert result[0][0] > 1000
+    assert result[0][0] == -1

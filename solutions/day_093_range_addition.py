@@ -3,6 +3,6 @@ def get_modified_array(length, updates):
     for start, end, val in updates:
         result[start] += val
         result[end + 1] -= val
-    for i in range(1, length):
+    for i in range(1, length + 1):
         result[i] += result[i - 1]
     return result[:-1]

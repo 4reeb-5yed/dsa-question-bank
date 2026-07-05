@@ -7,7 +7,7 @@ def shortest_distance(grid):
     dist = [[0] * n for _ in range(m)]
     reach = [[0] * n for _ in range(m)]
     buildings = 0
-    
+
     for i in range(m):
         for j in range(n):
             if grid[i][j] == 1:
@@ -32,7 +32,7 @@ def bfs(grid, i, j, dist, reach, m, n):
         for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:
             nx, ny = x + dx, y + dy
             if 0 <= nx < m and 0 <= ny < n and not visited[nx][ny]:
-                if grid[nx][ny] == 0 or grid[nx][ny] == 1:
+                if grid[nx][ny] == 0:
                     visited[nx][ny] = True
                     dist[nx][ny] += d + 1
                     reach[nx][ny] += 1

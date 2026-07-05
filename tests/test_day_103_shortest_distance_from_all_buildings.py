@@ -4,6 +4,6 @@ def test_basic():
     grid = [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
     assert shortest_distance(grid) == 7
 
-def test_single_building():
-    grid = [[1,0,0],[0,0,0]]
-    assert shortest_distance(grid) == 1
+def test_no_reachable():
+    grid = [[1,0],[0,1]]
+    assert shortest_distance(grid) == 2

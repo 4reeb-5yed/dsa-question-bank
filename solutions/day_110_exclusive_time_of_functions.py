@@ -14,8 +14,8 @@ def exclusive_time(n, logs):
             stack.append((fid, time))
             prev_time = time
         else:
-            result[fid] += time - prev_time
+            result[fid] += time - prev_time + 1
             stack.pop()
             if stack:
-                prev_time = time
+                prev_time = time + 1
     return result
