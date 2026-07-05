@@ -17,7 +17,20 @@ This repository holds the curated collection of Data Structures and Algorithms p
 ```
 ├── problems/
 │   └── bank.json    # Main problem bank (120 problems)
+├── solutions/       # Python solution files (day_001_*.py - day_120_*.py)
+├── tests/           # Pytest test files (test_day_001_*.py - test_day_120_*.py)
+├── .gitignore       # Git ignore file
 └── README.md
+```
+
+## Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run specific problem tests
+pytest tests/test_day_001_two_sum.py
 ```
 
 ## Problem Bank Schema
