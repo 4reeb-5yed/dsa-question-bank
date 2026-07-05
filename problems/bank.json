@@ -721,13 +721,13 @@
   },
   {
     "id": 73,
-    "slug": "product-array-except-self",
-    "title": "Product of Array Except Self",
+    "slug": "find-first-and-last-position",
+    "title": "Find First and Last Position in Sorted Array",
     "difficulty": "medium",
-    "topic": "array-hashing",
-    "statement": "Given an integer array nums, return an array answer where answer[i] equals the product of all elements of nums except nums[i]. You must solve without using division and with O(n) time complexity.",
-    "solution_code": "def product_except_self(nums):\n    n = len(nums)\n    result = [1] * n\n    prefix = 1\n    for i in range(n):\n        result[i] = prefix\n        prefix *= nums[i]\n    postfix = 1\n    for i in range(n - 1, -1, -1):\n        result[i] *= postfix\n        postfix *= nums[i]\n    return result",
-    "test_code": "from solutions.day_073_product_array_except_self import product_except_self\n\ndef test_product_basic():\n    result = product_except_self([1, 2, 3, 4])\n    assert result == [24, 12, 8, 6]\n\ndef test_product_with_zero():\n    result = product_except_self([-1, 1, 0, -3, 3])\n    assert result == [0, 0, 9, 0, 0]\n\ndef test_product_single():\n    assert product_except_self([1]) == [1]"
+    "topic": "binary-search",
+    "statement": "Given an array of integers sorted in non-decreasing order, find the starting and ending position of a target value. Return [-1, -1] if not found.",
+    "solution_code": "def find_first_and_last(nums, target):\n    def find_bound(nums, target, is_first):\n        left, right = 0, len(nums) - 1\n        bound = -1\n        while left <= right:\n            mid = (left + right) // 2\n            if nums[mid] == target:\n                bound = mid\n                if is_first:\n                    right = mid - 1\n                else:\n                    left = mid + 1\n            elif nums[mid] < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n        return bound\n    first = find_bound(nums, target, True)\n    last = find_bound(nums, target, False) if first != -1 else -1\n    return [first, last]",
+    "test_code": "from solutions.day_073_find_first_and_last_position import find_first_and_last\n\ndef test_find_basic():\n    assert find_first_and_last([5, 7, 7, 8, 8, 10], 8) == [3, 4]\n\ndef test_find_not_found():\n    assert find_first_and_last([5, 7, 7, 8, 8, 10], 6) == [-1, -1]\n\ndef test_find_single():\n    assert find_first_and_last([1], 1) == [0, 0]"
   },
   {
     "id": 74,
@@ -811,13 +811,13 @@
   },
   {
     "id": 82,
-    "slug": "max-container-water",
-    "title": "Container With Most Water",
+    "slug": "gas-station",
+    "title": "Gas Station",
     "difficulty": "medium",
-    "topic": "two-pointers",
-    "statement": "Given an array of non-negative integers representing heights of vertical lines, find two lines that together with the x-axis form a container that holds the most water.",
-    "solution_code": "def max_area(height):\n    left, right = 0, len(height) - 1\n    max_water = 0\n    while left < right:\n        h = min(height[left], height[right])\n        max_water = max(max_water, h * (right - left))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return max_water",
-    "test_code": "from solutions.day_082_max_container_water import max_area\n\ndef test_max_area_basic():\n    assert max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]) == 49\n\ndef test_max_area_two():\n    assert max_area([1, 1]) == 1\n\ndef test_max_area_same():\n    assert max_area([5, 5]) == 5"
+    "topic": "greedy",
+    "statement": "There are n gas stations along a circular route. Given gas[i] = gas available at station i and cost[i] = gas needed to travel from station i to i+1, return the starting station index where you can travel the whole circuit. Return -1 if not possible.",
+    "solution_code": "def can_complete_circuit(gas, cost):\n    total_tank, curr_tank = 0, 0\n    start = 0\n    for i in range(len(gas)):\n        diff = gas[i] - cost[i]\n        total_tank += diff\n        curr_tank += diff\n        if curr_tank < 0:\n            start = i + 1\n            curr_tank = 0\n    return start if total_tank >= 0 else -1",
+    "test_code": "from solutions.day_082_gas_station import can_complete_circuit\n\ndef test_gas_basic():\n    assert can_complete_circuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]) == 3\n\ndef test_gas_impossible():\n    assert can_complete_circuit([2, 3, 4], [3, 4, 5]) == -1\n\ndef test_gas_start_at_0():\n    assert can_complete_circuit([5, 1, 2, 3, 4], [4, 4, 1, 5, 1]) == 4"
   },
   {
     "id": 83,
