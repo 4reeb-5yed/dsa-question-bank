@@ -851,253 +851,253 @@
   },
   {
     "id": 86,
-    "slug": "problem-86",
-    "title": "Problem 86",
+    "slug": "stack-of-plates",
+    "title": "Stack of Plates",
     "difficulty": "hard",
     "topic": "stacks",
-    "statement": "Problem 86: Problem 86",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_086_problem_86 import problem_86\n\ndef test_problem_86():\n    assert problem_86(5) == 5\n"
+    "statement": "Imagine a stack of plates. If the stack gets too high, it might topple. Therefore, we would start a new stack of plates when the previous stack exceeds some threshold. Implement a data structure SetOfStacks that mimics this behavior with push, pop, and popAt(index) operations.",
+    "solution_code": "class SetOfStacks:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.stacks = [[]]\n    \n    def push(self, val):\n        if len(self.stacks[-1]) >= self.capacity:\n            self.stacks.append([])\n        self.stacks[-1].append(val)\n    \n    def pop(self):\n        if not self.stacks[-1]:\n            return None\n        val = self.stacks[-1].pop()\n        if not self.stacks[-1] and len(self.stacks) > 1:\n            self.stacks.pop()\n        return val\n    \n    def pop_at(self, index):\n        if index >= len(self.stacks) or not self.stacks[index]:\n            return None\n        val = self.stacks[index].pop()\n        if not self.stacks[index] and len(self.stacks) > 1:\n            self.stacks.pop(index)\n        return val",
+    "test_code": "from solutions.day_086_stack_of_plates import SetOfStacks\n\ndef test_push_and_pop():\n    s = SetOfStacks(3)\n    s.push(1); s.push(2); s.push(3); s.push(4)\n    assert s.pop() == 4\n    assert s.pop() == 3\n\ndef test_pop_at():\n    s = SetOfStacks(2)\n    s.push(1); s.push(2); s.push(3); s.push(4)\n    assert s.pop_at(0) == 2\n    assert s.pop_at(0) == 1\n\ndef test_multiple_stacks():\n    s = SetOfStacks(2)\n    for i in range(1, 7):\n        s.push(i)\n    assert s.stacks == [[1, 2], [3, 4], [5, 6]]"
   },
   {
     "id": 87,
-    "slug": "problem-87",
-    "title": "Problem 87",
+    "slug": "non-overlapping-intervals",
+    "title": "Non-overlapping Intervals",
     "difficulty": "easy",
     "topic": "intervals",
-    "statement": "Problem 87: Problem 87",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_087_problem_87 import problem_87\n\ndef test_problem_87():\n    assert problem_87(5) == 5\n"
+    "statement": "Given an array of intervals where intervals[i] = [start, end], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.",
+    "solution_code": "def erase_overlap_intervals(intervals):\n    if not intervals:\n        return 0\n    intervals.sort(key=lambda x: x[1])\n    count = 0\n    end = intervals[0][1]\n    for i in range(1, len(intervals)):\n        if intervals[i][0] < end:\n            count += 1\n        else:\n            end = intervals[i][1]\n    return count",
+    "test_code": "from solutions.day_087_non_overlapping_intervals import erase_overlap_intervals\n\ndef test_overlapping():\n    assert erase_overlap_intervals([[1,2], [2,3], [3,4], [1,3]]) == 1\n\ndef test_no_overlap():\n    assert erase_overlap_intervals([[1,2], [3,4]]) == 0\n\ndef test_all_overlap():\n    assert erase_overlap_intervals([[1,2], [1,2], [1,2]]) == 2"
   },
   {
     "id": 88,
-    "slug": "problem-88",
-    "title": "Problem 88",
+    "slug": "single-number-ii",
+    "title": "Single Number II",
     "difficulty": "medium",
     "topic": "bit-manipulation",
-    "statement": "Problem 88: Problem 88",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_088_problem_88 import problem_88\n\ndef test_problem_88():\n    assert problem_88(5) == 5\n"
+    "statement": "Given an integer array where every element appears three times except for one which appears once, find and return the element that appears only once.",
+    "solution_code": "def single_number(nums):\n    seen_once = seen_twice = 0\n    for num in nums:\n        seen_once = (seen_once ^ num) & ~seen_twice\n        seen_twice = (seen_twice ^ num) & ~seen_once\n    return seen_once",
+    "test_code": "from solutions.day_088_single_number_ii import single_number\n\ndef test_single_basic():\n    assert single_number([2, 2, 3, 2]) == 3\n\ndef test_single_larger():\n    assert single_number([0, 1, 0, 1, 0, 1, 99]) == 99\n\ndef test_single_negative():\n    assert single_number([-2, -2, -2, -1]) == -1"
   },
   {
     "id": 89,
-    "slug": "problem-89",
-    "title": "Problem 89",
+    "slug": "longest-repeating-character-replacement",
+    "title": "Longest Repeating Character Replacement",
     "difficulty": "hard",
     "topic": "sliding-window",
-    "statement": "Problem 89: Problem 89",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_089_problem_89 import problem_89\n\ndef test_problem_89():\n    assert problem_89(5) == 5\n"
+    "statement": "Given a string s and an integer k, you can choose any character in the string and change it to any other character k times. Return the length of the longest substring that contains only one character after at most k replacements.",
+    "solution_code": "def character_replacement(s, k):\n    count = {}\n    left = 0\n    max_len = 0\n    max_count = 0\n    for right in range(len(s)):\n        count[s[right]] = count.get(s[right], 0) + 1\n        max_count = max(max_count, count[s[right]])\n        while (right - left + 1) - max_count > k:\n            count[s[left]] -= 1\n            left += 1\n        max_len = max(max_len, right - left + 1)\n    return max_len",
+    "test_code": "from solutions.day_089_longest_repeating_character_replacement import character_replacement\n\ndef test_basic():\n    assert character_replacement('ABAB', 2) == 4\n\ndef test_no_replacement():\n    assert character_replacement('AABABBA', 1) == 4\n\ndef test_all_same():\n    assert character_replacement('AAAA', 0) == 4"
   },
   {
     "id": 90,
-    "slug": "problem-90",
-    "title": "Problem 90",
+    "slug": "maximum-subarray",
+    "title": "Maximum Subarray",
     "difficulty": "easy",
     "topic": "dynamic-programming",
-    "statement": "Problem 90: Problem 90",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_090_problem_90 import problem_90\n\ndef test_problem_90():\n    assert problem_90(5) == 5\n"
+    "statement": "Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
+    "solution_code": "def max_sub_array(nums):\n    max_sum = nums[0]\n    current_sum = nums[0]\n    for i in range(1, len(nums)):\n        current_sum = max(nums[i], current_sum + nums[i])\n        max_sum = max(max_sum, current_sum)\n    return max_sum",
+    "test_code": "from solutions.day_090_maximum_subarray import max_sub_array\n\ndef test_basic():\n    assert max_sub_array([-2, 1, -3, 4, -1, 2, 1, -5, 4]) == 6\n\ndef test_all_negative():\n    assert max_sub_array([-1]) == -1\n\ndef test_single_element():\n    assert max_sub_array([5]) == 5"
   },
   {
     "id": 91,
-    "slug": "problem-91",
-    "title": "Problem 91",
+    "slug": "all-paths-source-target",
+    "title": "All Paths From Source to Target",
     "difficulty": "medium",
     "topic": "graphs",
-    "statement": "Problem 91: Problem 91",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_091_problem_91 import problem_91\n\ndef test_problem_91():\n    assert problem_91(5) == 5\n"
+    "statement": "Given a directed acyclic graph with n nodes labeled from 0 to n-1, return all possible paths from node 0 to node n-1.",
+    "solution_code": "from collections import defaultdict\n\ndef all_paths_source_target(graph):\n    n = len(graph)\n    result = []\n    \n    def dfs(node, path):\n        if node == n - 1:\n            result.append(path[:])\n            return\n        for neighbor in graph[node]:\n            path.append(neighbor)\n            dfs(neighbor, path)\n            path.pop()\n    \n    dfs(0, [0])\n    return result",
+    "test_code": "from solutions.day_091_all_paths_source_target import all_paths_source_target\n\ndef test_basic():\n    graph = [[1,2], [3], [3], []]\n    result = all_paths_source_target(graph)\n    assert len(result) == 2\n    assert [0, 1, 3] in result\n    assert [0, 2, 3] in result\n\ndef test_single_path():\n    graph = [[1], []]\n    result = all_paths_source_target(graph)\n    assert result == [[0, 1]]\n\ndef test_multiple_paths():\n    graph = [[1,2,3], [2], [3], []]\n    result = all_paths_source_target(graph)\n    assert len(result) == 3"
   },
   {
     "id": 92,
-    "slug": "problem-92",
-    "title": "Problem 92",
+    "slug": "basic-calculator-iii",
+    "title": "Basic Calculator III",
     "difficulty": "hard",
     "topic": "stacks",
-    "statement": "Problem 92: Problem 92",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_092_problem_92 import problem_92\n\ndef test_problem_92():\n    assert problem_92(5) == 5\n"
+    "statement": "Implement a basic calculator that evaluates a string expression containing non-negative integers, '+', '-', '*', '/' operators, and parentheses.",
+    "solution_code": "def calculate(s):\n    def helper(s, start, end):\n        stack = []\n        i = start\n        num = 0\n        op = '+'\n        \n        while i < end:\n            c = s[i]\n            if c.isdigit():\n                num = num * 10 + int(c)\n            elif c == ' ':\n                pass\n            elif c == '(':\n                j = i + 1\n                depth = 1\n                while j < end and depth > 0:\n                    if s[j] == '(':\n                        depth += 1\n                    elif s[j] == ')':\n                        depth -= 1\n                    j += 1\n                num = helper(s, i + 1, j - 1)\n                i = j - 1\n            elif c in '+-*/)':\n                if op == '+':\n                    stack.append(num)\n                elif op == '-':\n                    stack.append(-num)\n                elif op == '*':\n                    stack.append(stack.pop() * num)\n                elif op == '/':\n                    stack.append(int(stack.pop() / num))\n                if c == ')':\n                    return sum(stack)\n                op = c\n                num = 0\n            i += 1\n        \n        if op == '+':\n            stack.append(num)\n        elif op == '-':\n            stack.append(-num)\n        elif op == '*':\n            stack.append(stack.pop() * num)\n        elif op == '/':\n            stack.append(int(stack.pop() / num))\n        \n        return sum(stack)\n    \n    return helper(s, 0, len(s))",
+    "test_code": "from solutions.day_092_basic_calculator_iii import calculate\n\ndef test_basic_add_sub():\n    assert calculate('1 + 1') == 2\n    assert calculate('2 - 1') == 1\n\ndef test_mult_div():\n    assert calculate('2 * 3') == 6\n    assert calculate('8 / 4') == 2\n\ndef test_complex():\n    assert calculate('1 + 2 * 3') == 7\n    assert calculate('(2 + 3) * 4') == 20"
   },
   {
     "id": 93,
-    "slug": "problem-93",
-    "title": "Problem 93",
+    "slug": "range-addition",
+    "title": "Range Addition",
     "difficulty": "easy",
     "topic": "intervals",
-    "statement": "Problem 93: Problem 93",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_093_problem_93 import problem_93\n\ndef test_problem_93():\n    assert problem_93(5) == 5\n"
+    "statement": "Assume you have an array of length n initially filled with zeros. Given a list of 'add' operations where each operation is [start, end, val], add val to each element from index start to end (inclusive).",
+    "solution_code": "def get_modified_array(length, updates):\n    result = [0] * (length + 1)\n    for start, end, val in updates:\n        result[start] += val\n        result[end + 1] -= val\n    for i in range(1, length):\n        result[i] += result[i - 1]\n    return result[:-1]",
+    "test_code": "from solutions.day_093_range_addition import get_modified_array\n\ndef test_basic():\n    assert get_modified_array(5, [[1, 3, 2], [2, 4, 3]]) == [0, 5, 5, 5, 3]\n\ndef test_single_element():\n    assert get_modified_array(1, [[0, 0, 5]]) == [5]\n\ndef test_no_updates():\n    assert get_modified_array(3, []) == [0, 0, 0]"
   },
   {
     "id": 94,
-    "slug": "problem-94",
-    "title": "Problem 94",
+    "slug": "sum-of-two-integers",
+    "title": "Sum of Two Integers",
     "difficulty": "medium",
     "topic": "bit-manipulation",
-    "statement": "Problem 94: Problem 94",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_094_problem_94 import problem_94\n\ndef test_problem_94():\n    assert problem_94(5) == 5\n"
+    "statement": "Given two integers a and b, return the sum of the two integers without using the '+' or '-' operators.",
+    "solution_code": "def get_sum(a, b):\n    while b != 0:\n        carry = (a & b) << 1\n        a = a ^ b\n        b = carry & 0xFFFFFFFF\n        if b != 0:\n            a = a & 0xFFFFFFFF\n    return a if a <= 0x7FFFFFFF else a - 0x100000000",
+    "test_code": "from solutions.day_094_sum_of_two_integers import get_sum\n\ndef test_basic():\n    assert get_sum(1, 2) == 3\n    assert get_sum(5, 7) == 12\n\ndef test_negative():\n    assert get_sum(-1, 1) == 0\n    assert get_sum(-5, 2) == -3\n\ndef test_zero():\n    assert get_sum(0, 0) == 0\n    assert get_sum(0, 5) == 5"
   },
   {
     "id": 95,
-    "slug": "problem-95",
-    "title": "Problem 95",
+    "slug": "subarray-product-less-than-k",
+    "title": "Subarray Product Less Than K",
     "difficulty": "hard",
     "topic": "sliding-window",
-    "statement": "Problem 95: Problem 95",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_095_problem_95 import problem_95\n\ndef test_problem_95():\n    assert problem_95(5) == 5\n"
+    "statement": "Given an array of positive integers nums and a positive integer k, return the total number of contiguous subarrays where the product of all elements is strictly less than k.",
+    "solution_code": "def num_subarray_product_less_than_k(nums, k):\n    if k <= 1:\n        return 0\n    result = 0\n    product = 1\n    left = 0\n    for right in range(len(nums)):\n        product *= nums[right]\n        while product >= k:\n            product /= nums[left]\n            left += 1\n        result += right - left + 1\n    return result",
+    "test_code": "from solutions.day_095_subarray_product_less_than_k import num_subarray_product_less_than_k\n\ndef test_basic():\n    assert num_subarray_product_less_than_k([10, 5, 2, 6], 100) == 8\n\ndef test_k_too_small():\n    assert num_subarray_product_less_than_k([1, 2, 3], 1) == 0\n\ndef test_all_valid():\n    assert num_subarray_product_less_than_k([1, 1, 1], 2) == 6"
   },
   {
     "id": 96,
-    "slug": "problem-96",
-    "title": "Problem 96",
+    "slug": "unique-paths",
+    "title": "Unique Paths",
     "difficulty": "easy",
     "topic": "dynamic-programming",
-    "statement": "Problem 96: Problem 96",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_096_problem_96 import problem_96\n\ndef test_problem_96():\n    assert problem_96(5) == 5\n"
+    "statement": "A robot is located at the top-left corner of an m x n grid. The robot can only move either down or right. How many possible unique paths are there to reach the bottom-right corner?",
+    "solution_code": "def unique_paths(m, n):\n    dp = [1] * n\n    for i in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n    return dp[-1]",
+    "test_code": "from solutions.day_096_unique_paths import unique_paths\n\ndef test_basic():\n    assert unique_paths(3, 7) == 28\n    assert unique_paths(3, 2) == 3\n\ndef test_single_row_or_col():\n    assert unique_paths(1, 1) == 1\n    assert unique_paths(1, 10) == 1\n\ndef test_square():\n    assert unique_paths(3, 3) == 6"
   },
   {
     "id": 97,
-    "slug": "problem-97",
-    "title": "Problem 97",
+    "slug": "graph-valid-tree",
+    "title": "Graph Valid Tree",
     "difficulty": "medium",
     "topic": "graphs",
-    "statement": "Problem 97: Problem 97",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_097_problem_97 import problem_97\n\ndef test_problem_97():\n    assert problem_97(5) == 5\n"
+    "statement": "Given n nodes and a list of undirected edges, determine if these edges form a valid tree.",
+    "solution_code": "from collections import defaultdict, deque\n\ndef valid_tree(n, edges):\n    if len(edges) != n - 1:\n        return False\n    graph = defaultdict(list)\n    for a, b in edges:\n        graph[a].append(b)\n        graph[b].append(a)\n    visited = set()\n    queue = deque([0])\n    while queue:\n        node = queue.popleft()\n        if node in visited:\n            continue\n        visited.add(node)\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                queue.append(neighbor)\n    return len(visited) == n",
+    "test_code": "from solutions.day_097_graph_valid_tree import valid_tree\n\ndef test_valid_tree():\n    assert valid_tree(5, [[0,1], [0,2], [0,3], [1,4]]) == True\n\ndef test_not_connected():\n    assert valid_tree(5, [[0,1], [2,3]]) == False\n\ndef test_cycle():\n    assert valid_tree(4, [[0,1], [1,2], [2,0]]) == False"
   },
   {
     "id": 98,
-    "slug": "problem-98",
-    "title": "Problem 98",
+    "slug": "validate-stack-sequences",
+    "title": "Validate Stack Sequences",
     "difficulty": "hard",
     "topic": "stacks",
-    "statement": "Problem 98: Problem 98",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_098_problem_98 import problem_98\n\ndef test_problem_98():\n    assert problem_98(5) == 5\n"
+    "statement": "Given two sequences pushed and popped with distinct values, return true if this could have been the result of push and pop operations on an initially empty stack.",
+    "solution_code": "def validate_stack_sequences(pushed, popped):\n    stack = []\n    j = 0\n    for x in pushed:\n        stack.append(x)\n        while stack and stack[-1] == popped[j]:\n            stack.pop()\n            j += 1\n    return len(stack) == 0",
+    "test_code": "from solutions.day_098_validate_stack_sequences import validate_stack_sequences\n\ndef test_basic():\n    assert validate_stack_sequences([1,2,3,4,5], [4,5,3,2,1]) == True\n\ndef test_not_valid():\n    assert validate_stack_sequences([1,2,3,4,5], [4,3,5,1,2]) == False\n\ndef test_single_element():\n    assert validate_stack_sequences([1], [1]) == True\n    assert validate_stack_sequences([1], [2]) == False"
   },
   {
     "id": 99,
-    "slug": "problem-99",
-    "title": "Problem 99",
+    "slug": "missing-ranges",
+    "title": "Missing Ranges",
     "difficulty": "easy",
     "topic": "intervals",
-    "statement": "Problem 99: Problem 99",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_099_problem_99 import problem_99\n\ndef test_problem_99():\n    assert problem_99(5) == 5\n"
+    "statement": "Given a sorted integer array nums and range [lower, upper], return the missing ranges from lower to upper in sorted order.",
+    "solution_code": "def find_missing_ranges(nums, lower, upper):\n    result = []\n    prev = lower - 1\n    for curr in nums + [upper + 1]:\n        if curr - prev > 1:\n            start = prev + 1\n            end = curr - 1\n            if start == end:\n                result.append(str(start))\n            else:\n                result.append(f'{start}->{end}')\n        prev = curr\n    return result",
+    "test_code": "from solutions.day_099_missing_ranges import find_missing_ranges\n\ndef test_basic():\n    result = find_missing_ranges([2, 3, 5], 0, 5)\n    assert '0->1' in result\n\ndef test_no_missing():\n    assert find_missing_ranges([0, 1, 2, 3], 0, 3) == []\n\ndef test_edges():\n    assert find_missing_ranges([], 1, 3) == ['1->3']"
   },
   {
     "id": 100,
-    "slug": "problem-100",
-    "title": "Problem 100",
+    "slug": "maximum-xor-of-two-numbers",
+    "title": "Maximum XOR of Two Numbers in Array",
     "difficulty": "medium",
     "topic": "bit-manipulation",
-    "statement": "Problem 100: Problem 100",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_100_problem_100 import problem_100\n\ndef test_problem_100():\n    assert problem_100(5) == 5\n"
+    "statement": "Given an integer array nums, find the maximum XOR of any two numbers in the array.",
+    "solution_code": "def find_maximum_xor(nums):\n    result = 0\n    mask = 0\n    for i in range(31, -1, -1):\n        mask |= (1 << i)\n        seen = set()\n        for num in nums:\n            seen.add(num & mask)\n        candidate = result | (1 << i)\n        for prefix in seen:\n            if (prefix ^ candidate) in seen:\n                result = candidate\n                break\n    return result",
+    "test_code": "from solutions.day_100_maximum_xor_of_two_numbers import find_maximum_xor\n\ndef test_basic():\n    assert find_maximum_xor([3, 10, 5, 25, 2, 8]) == 28\n\ndef test_two_elements():\n    assert find_maximum_xor([0, 2]) == 2\n\ndef test_same_elements():\n    assert find_maximum_xor([5, 5, 5]) == 0"
   },
   {
     "id": 101,
-    "slug": "problem-101",
-    "title": "Problem 101",
+    "slug": "find-all-anagrams",
+    "title": "Find All Anagrams in a String",
     "difficulty": "hard",
     "topic": "sliding-window",
-    "statement": "Problem 101: Problem 101",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_101_problem_101 import problem_101\n\ndef test_problem_101():\n    assert problem_101(5) == 5\n"
+    "statement": "Given a string s and a non-empty string p, find all starting indices of p's anagram in s.",
+    "solution_code": "from collections import Counter\n\ndef find_anagrams(s, p):\n    if len(p) > len(s):\n        return []\n    p_count = Counter(p)\n    s_count = Counter(s[:len(p) - 1])\n    result = []\n    for i in range(len(p) - 1, len(s)):\n        s_count[s[i]] += 1\n        if s_count == p_count:\n            result.append(i - len(p) + 1)\n        s_count[s[i - len(p) + 1]] -= 1\n        if s_count[s[i - len(p) + 1]] == 0:\n            del s_count[s[i - len(p) + 1]]\n    return result",
+    "test_code": "from solutions.day_101_find_all_anagrams import find_anagrams\n\ndef test_basic():\n    assert find_anagrams('cbaebabacd', 'abc') == [0, 6]\n\ndef test_no_anagrams():\n    assert find_anagrams('hello', 'xyz') == []\n\ndef test_multiple():\n    assert 2 in find_anagrams('abab', 'ab')"
   },
   {
     "id": 102,
-    "slug": "problem-102",
-    "title": "Problem 102",
+    "slug": "best-sightseeing-pair",
+    "title": "Best Sightseeing Pair",
     "difficulty": "easy",
     "topic": "dynamic-programming",
-    "statement": "Problem 102: Problem 102",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_102_problem_102 import problem_102\n\ndef test_problem_102():\n    assert problem_102(5) == 5\n"
+    "statement": "Given an integer array values, return the maximum score a pair of sightseeing spots can achieve where score = values[i] + values[j] + i - j for i < j.",
+    "solution_code": "def max_score_sightseeing_pair(values):\n    best = 0\n    best_i = values[0]\n    for j in range(1, len(values)):\n        best = max(best, best_i + values[j] - j)\n        best_i = max(best_i, values[j] + j)\n    return best",
+    "test_code": "from solutions.day_102_best_sightseeing_pair import max_score_sightseeing_pair\n\ndef test_basic():\n    assert max_score_sightseeing_pair([8, 1, 5, 2, 6]) == 11\n\ndef test_two_elements():\n    assert max_score_sightseeing_pair([1, 2]) == 3\n\ndef test_decreasing():\n    assert max_score_sightseeing_pair([9, 4, 3, 2]) == 8"
   },
   {
     "id": 103,
-    "slug": "problem-103",
-    "title": "Problem 103",
+    "slug": "shortest-distance-from-all-buildings",
+    "title": "Shortest Distance from All Buildings",
     "difficulty": "medium",
     "topic": "graphs",
-    "statement": "Problem 103: Problem 103",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_103_problem_103 import problem_103\n\ndef test_problem_103():\n    assert problem_103(5) == 5\n"
+    "statement": "Given a grid with buildings (1), empty cells (0), and blocked cells (2), find the empty cell closest to all buildings.",
+    "solution_code": "from collections import deque\n\ndef shortest_distance(grid):\n    if not grid or not grid[0]:\n        return -1\n    m, n = len(grid), len(grid[0])\n    dist = [[0] * n for _ in range(m)]\n    reach = [[0] * n for _ in range(m)]\n    buildings = 0\n    \n    for i in range(m):\n        for j in range(n):\n            if grid[i][j] == 1:\n                buildings += 1\n                bfs(grid, i, j, dist, reach, m, n)\n\n    if buildings == 0:\n        return -1\n    result = float('inf')\n    for i in range(m):\n        for j in range(n):\n            if grid[i][j] == 0 and reach[i][j] == buildings:\n                result = min(result, dist[i][j])\n    return result if result != float('inf') else -1\n\ndef bfs(grid, i, j, dist, reach, m, n):\n    visited = [[False] * n for _ in range(m)]\n    queue = deque([(i, j, 0)])\n    visited[i][j] = True\n    while queue:\n        x, y, d = queue.popleft()\n        for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < m and 0 <= ny < n and not visited[nx][ny]:\n                if grid[nx][ny] == 0 or grid[nx][ny] == 1:\n                    visited[nx][ny] = True\n                    dist[nx][ny] += d + 1\n                    reach[nx][ny] += 1\n                    queue.append((nx, ny, d + 1))",
+    "test_code": "from solutions.day_103_shortest_distance_from_all_buildings import shortest_distance\n\ndef test_basic():\n    grid = [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]\n    assert shortest_distance(grid) == 7\n\ndef test_no_reachable():\n    grid = [[1,0],[0,1]]\n    assert shortest_distance(grid) == -1"
   },
   {
     "id": 104,
-    "slug": "problem-104",
-    "title": "Problem 104",
+    "slug": "132-pattern",
+    "title": "132 Pattern",
     "difficulty": "hard",
     "topic": "stacks",
-    "statement": "Problem 104: Problem 104",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_104_problem_104 import problem_104\n\ndef test_problem_104():\n    assert problem_104(5) == 5\n"
+    "statement": "Given an array of n integers nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[k] < nums[j].",
+    "solution_code": "def find132pattern(nums):\n    stack = []\n    s3 = float('-inf')\n    for n in reversed(nums):\n        if n < s3:\n            return True\n        while stack and n > stack[-1]:\n            s3 = stack.pop()\n        stack.append(n)\n    return False",
+    "test_code": "from solutions.day_104_132_pattern import find132pattern\n\ndef test_basic():\n    assert find132pattern([1, 2, 3, 4]) == False\n    assert find132pattern([3, 1, 4, 2]) == True\n\ndef test_negative():\n    assert find132pattern([-1, 3, 2, 0]) == True"
   },
   {
     "id": 105,
-    "slug": "problem-105",
-    "title": "Problem 105",
+    "slug": "meeting-rooms-ii",
+    "title": "Meeting Rooms II",
     "difficulty": "easy",
     "topic": "intervals",
-    "statement": "Problem 105: Problem 105",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_105_problem_105 import problem_105\n\ndef test_problem_105():\n    assert problem_105(5) == 5\n"
+    "statement": "Given an array of meeting time intervals, return the minimum number of conference rooms required to hold all meetings.",
+    "solution_code": "import heapq\n\ndef min_meeting_rooms(intervals):\n    if not intervals:\n        return 0\n    intervals.sort(key=lambda x: x[0])\n    heap = [intervals[0][1]]\n    for i in range(1, len(intervals)):\n        if intervals[i][0] >= heap[0]:\n            heapq.heappop(heap)\n        heapq.heappush(heap, intervals[i][1])\n    return len(heap)",
+    "test_code": "from solutions.day_105_meeting_rooms_ii import min_meeting_rooms\n\ndef test_basic():\n    assert min_meeting_rooms([[0, 30], [5, 10], [15, 20]]) == 2\n\ndef test_no_overlap():\n    assert min_meeting_rooms([[7, 10], [2, 4]]) == 1\n\ndef test_all_overlap():\n    assert min_meeting_rooms([[1, 5], [2, 6], [3, 7]]) == 3"
   },
   {
     "id": 106,
-    "slug": "problem-106",
-    "title": "Problem 106",
+    "slug": "bitwise-and-of-range",
+    "title": "Bitwise AND of Number Range",
     "difficulty": "medium",
     "topic": "bit-manipulation",
-    "statement": "Problem 106: Problem 106",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_106_problem_106 import problem_106\n\ndef test_problem_106():\n    assert problem_106(5) == 5\n"
+    "statement": "Given two integers left and right, return the bitwise AND of all numbers in the range [left, right] (inclusive).",
+    "solution_code": "def range_bitwise_and(left, right):\n    shift = 0\n    while left < right:\n        left >>= 1\n        right >>= 1\n        shift += 1\n    return left << shift",
+    "test_code": "from solutions.day_106_bitwise_and_of_range import range_bitwise_and\n\ndef test_basic():\n    assert range_bitwise_and(5, 7) == 4\n\ndef test_same():\n    assert range_bitwise_and(1, 1) == 1\n\ndef test_large_range():\n    assert range_bitwise_and(0, 0) == 0"
   },
   {
     "id": 107,
-    "slug": "problem-107",
-    "title": "Problem 107",
+    "slug": "minimum-size-subarray-sum",
+    "title": "Minimum Size Subarray Sum",
     "difficulty": "hard",
     "topic": "sliding-window",
-    "statement": "Problem 107: Problem 107",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_107_problem_107 import problem_107\n\ndef test_problem_107():\n    assert problem_107(5) == 5\n"
+    "statement": "Given an array of positive integers nums and a positive integer s, find the minimal length of a contiguous subarray with sum >= s.",
+    "solution_code": "def min_sub_array_len(s, nums):\n    left = 0\n    total = 0\n    result = float('inf')\n    for right in range(len(nums)):\n        total += nums[right]\n        while total >= s:\n            result = min(result, right - left + 1)\n            total -= nums[left]\n            left += 1\n    return result if result != float('inf') else 0",
+    "test_code": "from solutions.day_107_minimum_size_subarray_sum import min_sub_array_len\n\ndef test_basic():\n    assert min_sub_array_len(7, [2, 3, 1, 2, 4, 3]) == 2\n\ndef test_not_possible():\n    assert min_sub_array_len(15, [1, 2, 3, 4, 5]) == 0\n\ndef test_single_element():\n    assert min_sub_array_len(3, [1, 1]) == 2"
   },
   {
     "id": 108,
-    "slug": "problem-108",
-    "title": "Problem 108",
+    "slug": "minimum-path-sum",
+    "title": "Minimum Path Sum",
     "difficulty": "easy",
     "topic": "dynamic-programming",
-    "statement": "Problem 108: Problem 108",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_108_problem_108 import problem_108\n\ndef test_problem_108():\n    assert problem_108(5) == 5\n"
+    "statement": "Given a m x n grid filled with non-negative numbers, find a path from top-left to bottom-right which minimizes the sum of all numbers along its path.",
+    "solution_code": "def min_path_sum(grid):\n    m, n = len(grid), len(grid[0])\n    for i in range(m):\n        for j in range(n):\n            if i == 0 and j == 0:\n                continue\n            elif i == 0:\n                grid[i][j] += grid[i][j-1]\n            elif j == 0:\n                grid[i][j] += grid[i-1][j]\n            else:\n                grid[i][j] += min(grid[i-1][j], grid[i][j-1])\n    return grid[m-1][n-1]",
+    "test_code": "from solutions.day_108_minimum_path_sum import min_path_sum\n\ndef test_basic():\n    assert min_path_sum([[1,3,1],[1,5,1],[4,2,1]]) == 7\n\ndef test_single_element():\n    assert min_path_sum([[5]]) == 5\n\ndef test_two_by_two():\n    assert min_path_sum([[1,2],[1,1]]) == 3"
   },
   {
     "id": 109,
-    "slug": "problem-109",
-    "title": "Problem 109",
+    "slug": "01-matrix",
+    "title": "01 Matrix",
     "difficulty": "medium",
     "topic": "graphs",
-    "statement": "Problem 109: Problem 109",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_109_problem_109 import problem_109\n\ndef test_problem_109():\n    assert problem_109(5) == 5\n"
+    "statement": "Given an m x n binary matrix containing only 0s and 1s, for each 0, compute the distance to the nearest 0.",
+    "solution_code": "from collections import deque\n\ndef update_matrix(mat):\n    if not mat:\n        return mat\n    m, n = len(mat), len(mat[0])\n    result = [[float('inf')] * n for _ in range(m)]\n    queue = deque()\n    for i in range(m):\n        for j in range(n):\n            if mat[i][j] == 0:\n                result[i][j] = 0\n                queue.append((i, j))\n    directions = [(0,1),(0,-1),(1,0),(-1,0)]\n    while queue:\n        i, j = queue.popleft()\n        for di, dj in directions:\n            ni, nj = i + di, j + dj\n            if 0 <= ni < m and 0 <= nj < n:\n                if result[ni][nj] > result[i][j] + 1:\n                    result[ni][nj] = result[i][j] + 1\n                    queue.append((ni, nj))\n    return result",
+    "test_code": "from solutions.day_109_01_matrix import update_matrix\n\ndef test_basic():\n    mat = [[0,0,0],[0,1,0],[1,1,1]]\n    result = update_matrix(mat)\n    assert result[0][0] == 0\n    assert result[1][2] == 1\n\ndef test_all_zeros():\n    mat = [[0,0],[0,0]]\n    result = update_matrix(mat)\n    assert result == [[0,0],[0,0]]\n\ndef test_all_ones():\n    mat = [[1,1],[1,1]]\n    result = update_matrix(mat)\n    assert result[0][0] == 1"
   },
   {
     "id": 110,
-    "slug": "problem-110",
-    "title": "Problem 110",
+    "slug": "exclusive-time-of-functions",
+    "title": "Exclusive Time of Functions",
     "difficulty": "hard",
     "topic": "stacks",
-    "statement": "Problem 110: Problem 110",
-    "solution_code": "def solution(arr):\n    return arr\n",
-    "test_code": "from solutions.day_110_problem_110 import problem_110\n\ndef test_problem_110():\n    assert problem_110(5) == 5\n"
+    "statement": "Given N functions and a log of start/end events, return the exclusive execution time for each function.",
+    "solution_code": "def exclusive_time(n, logs):\n    result = [0] * n\n    stack = []\n    prev_time = 0\n    for log in logs:\n        fid, is_start, time = log.split(':')\n        fid, time = int(fid), int(time)\n        is_start = is_start == 'start'\n        if not stack:\n            stack.append((fid, time))\n            prev_time = time\n        elif is_start:\n            result[stack[-1][0]] += time - prev_time\n            stack.append((fid, time))\n            prev_time = time\n        else:\n            result[fid] += time - prev_time\n            stack.pop()\n            if stack:\n                prev_time = time\n    return result",
+    "test_code": "from solutions.day_110_exclusive_time_of_functions import exclusive_time\n\ndef test_basic():\n    n = 2\n    logs = ['0:start:0','1:start:2','1:end:5','0:end:6']\n    assert exclusive_time(n, logs) == [3, 4]\n\ndef test_nested():\n    n = 2\n    logs = ['0:start:0','0:end:10']\n    assert exclusive_time(n, logs) == [10, 0]\n\ndef test_multiple():\n    n = 2\n    logs = ['0:start:0','1:start:2','1:end:3','0:end:5']\n    assert exclusive_time(n, logs) == [4, 1]"
   },
   {
     "id": 111,
